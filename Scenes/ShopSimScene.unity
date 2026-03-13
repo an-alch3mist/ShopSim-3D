@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 10160153}
   - component: {fileID: 10160157}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: headCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1585,7 +1585,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -2214,7 +2214,7 @@ GameObject:
   - component: {fileID: 1254541639}
   - component: {fileID: 1254541638}
   m_Layer: 0
-  m_Name: lowerShelf
+  m_Name: lowerShelf (y=0.2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4483,7 +4483,7 @@ GameObject:
   - component: {fileID: 1847359113}
   - component: {fileID: 1847359117}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: bodyCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4912,7 +4912,7 @@ MeshRenderer:
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
   m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 2
+  m_SelectedEditorRenderState: 3
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -5942,7 +5942,7 @@ GameObject:
   - component: {fileID: 2072930094}
   - component: {fileID: 2072930093}
   m_Layer: 0
-  m_Name: upperShelf
+  m_Name: upperShelf (y=1.0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6293,7 +6293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134434652}
   m_Layer: 0
-  m_Name: npcModel
+  m_Name: npcModel 0.5 x 1.8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
