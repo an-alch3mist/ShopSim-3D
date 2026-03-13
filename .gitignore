@@ -1,0 +1,2 @@
+# Ignore /_Secure situated directory situated anywhere, when push is done via git
+**/_Secure/
