@@ -83,8 +83,8 @@ public class QueuePOI : MonoBehaviour, IPOI
 	}
 
 	// self register with POIRegistry on enable
-	// private void Start()
-	private void OnEnable()
+	//private void OnEnable()
+	private void Start()
 	{
 		Debug.Log(C.method(this));
 		POIRegistry.Ins.RegisterQ(this);

@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NavMeshMover
   _speed: 7
-  _stoppingDist: 0.3
+  _stoppingDist: 0.1
   _arrivalTime: 20
   _agent: {fileID: 7122874381688030173}
 --- !u!114 &883080112778731217
@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82baafa6d1354bf418c405034a3ff37a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CustomerAgent
-  Profile: {fileID: 0}
+  profileData: {fileID: 0}
   entrancePoint: {fileID: 0}
   exitPoint: {fileID: 0}
   despawnPoint: {fileID: 0}

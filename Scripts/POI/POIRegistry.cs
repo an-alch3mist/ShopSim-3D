@@ -14,11 +14,11 @@ public class POIRegistry : MonoBehaviour
 	private void Awake()
 	{
 		Debug.Log(C.method(this));
+		this.Init();
 	}
 
 	public void Init()
 	{
-		Debug.Log(C.method(this));
 		POIRegistry.Ins = this;
 		this.QUEUE = new List<QueuePOI>();
 	}

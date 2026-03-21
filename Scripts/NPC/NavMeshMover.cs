@@ -34,7 +34,7 @@ public class NavMeshMover : MonoBehaviour
 	}
 
 	[SerializeField] float _speed = 3f;
-	[SerializeField] float _stoppingDist = 0.3f;
+	[SerializeField] float _stoppingDist = 0.1f;
 	[SerializeField] float _arrivalTime = 20f;
 	[SerializeField] NavMeshAgent _agent = null;
 	#region private API
@@ -56,6 +56,7 @@ public class NavMeshMover : MonoBehaviour
 	Coroutine refTrackingRoutine;
 	IEnumerator StartTrackingRoutine(Action onArrived)
 	{
+		yield return null; // calculate navMeshPath after setting destination
 		for (float elapsed = 0f; elapsed < this._arrivalTime; elapsed += Time.deltaTime)
 		{
 			bool hasArrived = (_agent.pathPending == false) && (_agent.remainingDistance <= _agent.stoppingDistance);
