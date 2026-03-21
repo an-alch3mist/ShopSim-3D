@@ -13,12 +13,19 @@ The three things the comments nail down for each event:
 - who listens — every class that does GameEvents.OnXyz += Handle
 - what the listener does with c — so it's obvious the payload is specific, not broadcast-to-all
 */
+/*
+[CustomerFSM]                  [GameEvents]               [StoreManager]
+     │                              │                           │
+     │── RaiseCustomerEntered() ───►│                           │
+     │                              │── HandleCustomerEntered ─►│
+     │                              │                           │ _count += 1
+*/
 public static class GameEvents
 {
 	// ┌─────────────────────────────────────────────────────────┐
 	// │  CustomerFSM (WalkIn state)                             │
 	// │       │                                                 │
-	// │  GameEvents.RaiseCustomerEntered(this)                       │
+	// │  GameEvents.RaiseCustomerEntered(this)					 │
 	// │       │                                                 │
 	// │       ├──► StoreManager   → _customersInsideCount++     │
 	// │       └──► DebugLogger    → Debug.Log(c.name)           │
@@ -26,6 +33,7 @@ public static class GameEvents
 	// │  c = the specific CustomerAgent that crossed entrance.  │
 	// │  Customer_02 entering does NOT fire for Customer_07.    │
 	// └─────────────────────────────────────────────────────────┘
+	// when npc crossed entrance point into the store.
 	public static event Action<CustomerAgent> OnCustomerEntered;
 	public static void RaiseCustomerEntered(CustomerAgent c)
 	{
@@ -48,6 +56,7 @@ public static class GameEvents
 	// │            OpenFastLane();                              │
 	// │    }                                                    │
 	// └─────────────────────────────────────────────────────────┘
+	// when npc books a queue slot and beings walking to it.
 	public static event Action<CustomerAgent> OnCustomerJoinedQ;
 	public static void RaiseCustomerJoinedQ(CustomerAgent c)
 	{
@@ -70,6 +79,7 @@ public static class GameEvents
 	// │  a direct reference to c — just reads what it needs     │
 	// │  from the payload and discards it.                      │
 	// └─────────────────────────────────────────────────────────┘
+	// when npc reaches exit point before the despawn walk.
 	public static event Action<CustomerAgent> OnCustomerLeft;
 	public static void RaiseCustomerLeft(CustomerAgent c)
 	{

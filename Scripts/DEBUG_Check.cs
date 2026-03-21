@@ -20,7 +20,7 @@ public class DEBUG_Check : MonoBehaviour
 		// yield return this.checkForIncr();
 		// yield return this.checkBreak();
 		// yield return this.checkCustomerAgent();
-		yield return this.checkCustomerAgent_1();
+		// yield return this.checkCustomerAgent_1();
 
 		yield return null;
 	}
@@ -130,6 +130,7 @@ public class DEBUG_Check : MonoBehaviour
 				});
 			}
 		});
+
 
 		// ── Stop all ─────────────────────────────────────────────
 		this._btn_stopAll.onClick.AddListener(() =>
