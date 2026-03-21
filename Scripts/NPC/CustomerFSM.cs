@@ -63,8 +63,8 @@ public class CustomerFSM : MonoBehaviour
 			return;
 		hasDoneInit = true;
 		//
-		Debug.Log($"require entrancePoint assign {Time.time} {owner.gameObject.name}".colorTag("cyan"));
-		Debug.Log($"entrancePoint assigned exist {Time.time} {owner.gameObject.name}".colorTag("cyan"));
+		// Debug.Log($"require entrancePoint assign {Time.time} {owner.gameObject.name}".colorTag("cyan"));
+		// Debug.Log($"entrancePoint assigned exist {Time.time} {owner.gameObject.name}".colorTag("cyan"));
 		isInProgressNav = true;
 		owner.Mover.MoveTo(owner.entrancePoint.position, onArrived: () =>
 		{
@@ -79,6 +79,7 @@ public class CustomerFSM : MonoBehaviour
 			return;
 		hasDoneInit = true;
 		//
+		/*
 		QueuePOI poi = POIRegistry.Ins.GetFirstAvailableQueueWithSlot();
 		// retry
 		if(poi == null) // queue is full, retry next tick
@@ -86,9 +87,10 @@ public class CustomerFSM : MonoBehaviour
 			hasDoneInit = false;
 			return;
 		}
-
+		
 		var slot = poi.BookSlot(owner);
-		/*
+		
+		
 		// retry
 		if(slot == null) // overlap book from different agent
 		{
@@ -96,15 +98,25 @@ public class CustomerFSM : MonoBehaviour
 			return;
 		}
 		*/
+		QueuePOI poi = POIRegistry.Ins.GetFirstAvailableQueueWithSlots();
+		// retry
+		if (poi == null) // queue is full, retry next tick
+		{
+			hasDoneInit = false;
+			return;
+		}
+		var slot = poi.BookSlot(owner);
+		
 		owner.CurrentQueue = poi;
 		owner.TrCurrentQueueSlot = slot;
-		GameEvents.RaiseCustomerJoinedQ(owner);
+		isInProgressNav = true;
 
-		waitInQueueDuration = C.Random(owner.Profile.minQWaitSec, owner.Profile.maxQWaitSec);
 		owner.Mover.MoveTo(slot.position, onArrived: () =>
 		{
 			isInProgressNav = false;
+			GameEvents.RaiseCustomerJoinedQ(owner);
 			waitInQueueTimer = 0f;
+			waitInQueueDuration = C.Random(owner.Profile.minQWaitSec, owner.Profile.maxQWaitSec);
 			TransitionTo(CustomerState.waitInQueue);
 		});
 	}
@@ -113,9 +125,21 @@ public class CustomerFSM : MonoBehaviour
 		waitInQueueTimer += Time.deltaTime;
 		if(waitInQueueTimer >= waitInQueueDuration)
 		{
+			if (owner.CurrentQueue == null)
+				Debug.Log(owner.gameObject.name + " null queue".colorTag("red"));
+
+			// LOG.H($"{owner.gameObject.name}");
+			// LOG.AddLog(owner.CurrentQueue.DOC_OCCUPANTS.ToTable(name: "DOC<>", toString: true));
+			//
 			owner.CurrentQueue.ReleaseSlot(owner);
+			//
+			// LOG.AddLog(owner.CurrentQueue.DOC_OCCUPANTS.ToTable(name: "DOC<>", toString: true));
+			// LOG.HEnd($"{owner.gameObject.name}");
+
 			owner.CurrentQueue = null;
 			owner.TrCurrentQueueSlot = null;
+
+			TransitionTo(CustomerState.leaveStore);
 		}
 	}
 	void ExecStateLeaveStore()
@@ -124,6 +148,13 @@ public class CustomerFSM : MonoBehaviour
 			return;
 		hasDoneInit = true;
 		//
+		isInProgressNav = true;
+		owner.Mover.MoveTo(owner.exitPoint.position, onArrived: () =>
+		{
+			isInProgressNav = false;
+			GameEvents.RaiseCustomerLeft(agent: owner);
+			TransitionTo(CustomerState.walkOut);
+		});
 	}
 	void ExecStateWalkOut()
 	{
@@ -131,6 +162,13 @@ public class CustomerFSM : MonoBehaviour
 			return;
 		hasDoneInit = true;
 		//
+		isInProgressNav = true;
+		owner.Mover.MoveTo(owner.despawnPoint.position, onArrived: () =>
+		{
+			isInProgressNav = false;
+			GameObject.Destroy(owner.gameObject);
+			TransitionTo(CustomerState.done);
+		});
 	}
 
 	// ── Transition ────────────────────────────────────────────
@@ -139,10 +177,11 @@ public class CustomerFSM : MonoBehaviour
 	/// Changes state and resets the _init flag.
 	private void TransitionTo(CustomerState next)
 	{
-		if (currState == next) return;
+		if (currState == next)
+			return;
 		Debug.Log($"[FSM] {gameObject.name}: {currState} → {next}");
-		currState = next;
 		hasDoneInit = false;
+		currState = next;
 	} 
 	#endregion
 }

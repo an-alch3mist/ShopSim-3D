@@ -24,7 +24,7 @@ public class POIRegistry : MonoBehaviour
 	public void RegisterQ(QueuePOI poi) { QUEUE.Add(poi); }
 	public void UnRegisterQ(QueuePOI poi) { QUEUE.Remove(poi); }
 	// return first unOccupied queue
-	public QueuePOI GetFirstAvailableQueueWithSlot()
+	public QueuePOI GetFirstAvailableQueueWithSlots()
 	{
 		return QUEUE.FirstOrDefault(poi => poi.HasAnyAvailableSlot());
 	}

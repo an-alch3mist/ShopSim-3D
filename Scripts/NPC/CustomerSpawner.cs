@@ -32,7 +32,7 @@ public class CustomerSpawner : MonoBehaviour
 
 	IEnumerator RoutineSpawn()
 	{
-		while(C.Safe(2, "spawnLoop"))
+		while(C.Safe(100, "spawnLoop"))
 		{
 			this.SpawnOne();
 			yield return new WaitForSeconds(2f);
@@ -65,7 +65,7 @@ public class CustomerSpawner : MonoBehaviour
 		agent.exitPoint = _Tr_exitPoint;
 		agent.despawnPoint = _Tr_despawnPoint;
 		agent.ApplyProfileData(pickProfile);
-		Debug.Log($"entrancePoint set done {Time.time}".colorTag("cyan"));
+		// Debug.Log($"entrancePoint set done {Time.time}".colorTag("cyan"));
 
 		Debug.Log($"[CustomerSpawner] Spawned {go.name} " +
 				  $"[{agent.Profile?.id ?? "no profile"}] " +

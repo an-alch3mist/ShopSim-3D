@@ -25,7 +25,7 @@ public class QueuePOI : MonoBehaviour, IPOI
 	}
 	public Transform BookSlot(CustomerAgent agent)
 	{
-		Debug.Log(C.method(this, "cyan"));
+		Debug.Log(C.method(this, "cyan", adMssg: $"{agent.gameObject.name}"));
 		// book the lowest free index
 		foreach (Transform tr in _TR_QUEUE_SLOTS)
 			if (DOC_OCCUPANTS[tr] == null)
@@ -50,14 +50,17 @@ public class QueuePOI : MonoBehaviour, IPOI
 	}
 	public void ReleaseSlot(CustomerAgent agent)
 	{
-		Debug.Log(C.method(this, "cyan"));
-		LOG.AddLog(this.DOC_OCCUPANTS.ToTable(name: "DOC<>", toString: true));
+		Debug.Log(C.method(this, "cyan", adMssg: $"{agent.gameObject.name}"));
+		Debug.Log($"releasing {agent} slot".colorTag("orange"));
 		foreach (var kvp in DOC_OCCUPANTS)
+		{
+			// Debug.Log($"{kvp.Key}, {kvp.Value}, {kvp.Value == agent}".colorTag(C.colorStr.magenta));
 			if (kvp.Value == agent)
 			{
 				DOC_OCCUPANTS[kvp.Key] = null;
 				return;
 			}
+		}
 	} 
 	#endregion
 
@@ -65,7 +68,7 @@ public class QueuePOI : MonoBehaviour, IPOI
 	[Header("Id")] [SerializeField] private string _poiId = "Id";
 	[Header("Slots")] [SerializeField] List<Transform> _TR_QUEUE_SLOTS;
 
-	Dictionary<Transform, CustomerAgent> DOC_OCCUPANTS;
+	public Dictionary<Transform, CustomerAgent> DOC_OCCUPANTS;
 
 	private void Awake()
 	{
@@ -80,7 +83,7 @@ public class QueuePOI : MonoBehaviour, IPOI
 	}
 
 	// self register with POIRegistry on enable
-	private void OnEnable()
+	private void Start()
 	{
 		Debug.Log(C.method(this));
 		POIRegistry.Ins.RegisterQ(this);

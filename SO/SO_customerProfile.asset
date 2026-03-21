@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SO_customerProfile
   m_EditorClassIdentifier: Assembly-CSharp::SO_CustomerProfileData
   id: name
-  walkSpeed: 3
-  minQWaitSec: 10
-  maxQWaitSec: 20
+  walkSpeed: 10
+  minQWaitSec: 20
+  maxQWaitSec: 30
   avoidancePriority: 50
