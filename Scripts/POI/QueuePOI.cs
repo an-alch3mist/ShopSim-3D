@@ -51,6 +51,7 @@ public class QueuePOI : MonoBehaviour, IPOI
 	public void ReleaseSlot(CustomerAgent agent)
 	{
 		Debug.Log(C.method(this, "cyan"));
+		LOG.AddLog(this.DOC_OCCUPANTS.ToTable(name: "DOC<>", toString: true));
 		foreach (var kvp in DOC_OCCUPANTS)
 			if (kvp.Value == agent)
 			{

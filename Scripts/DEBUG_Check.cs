@@ -14,9 +14,9 @@ public class DEBUG_Check : MonoBehaviour
 		this.StartCoroutine(this.STIMULATE());
 	}
 
-	[SerializeField] float _speed = 0f;
 	IEnumerator STIMULATE()
 	{
+		// yield return this.checkUTIL();
 		// yield return this.checkForIncr();
 		// yield return this.checkBreak();
 		// yield return this.checkCustomerAgent();
@@ -24,8 +24,21 @@ public class DEBUG_Check : MonoBehaviour
 
 		yield return null;
 	}
+	
+	[Header("checkUTIL")][SerializeField] List<int> LIST;
+	IEnumerator checkUTIL()
+	{
+		while(true)
+		{
+			if (INPUT.M.InstantDown(0))
+				Debug.Log(LIST.getRandom());
+			yield return null;
+		}
+		yield return null;
+	}
 
-	[SerializeField] bool _runYieldBreak = true;
+	[Header("checkForIncr")]
+	[SerializeField] float _speed = 0f;
 	IEnumerator checkForIncr()
 	{
 		for (float t = 0f; t < 100f; t += this._speed * Time.deltaTime)
@@ -36,6 +49,8 @@ public class DEBUG_Check : MonoBehaviour
 
 		yield return null;
 	}
+	[Header("checkYieldBreak")]
+	[SerializeField] bool _runYieldBreak = true;
 	IEnumerator checkBreak()
 	{
 		if (this._runYieldBreak == true)
@@ -97,7 +112,6 @@ public class DEBUG_Check : MonoBehaviour
 
 	// Tracks how many agents have reported arrival this round
 	int _arrivedCount = 0;
-
 	IEnumerator checkCustomerAgent_1()
 	{
 		Debug.Log(C.method(this, "lime"));

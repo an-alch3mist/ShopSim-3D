@@ -6,35 +6,14 @@ using UnityEngine.AI;
 
 using SPACE_UTIL;
 
-// require navMeshAgent
 public class NavMeshMover : MonoBehaviour
 {
-	public float _speed = 3f;
-	public float _stoppingDist = 0.3f;
-	public float _arrivalTime = 20f;
-	[SerializeField] NavMeshAgent _agent = null;
-
-	#region Unity Life Cycle
-	private void Awake()
-	{
-		Debug.Log(C.method(this));
-		_agent.speed = this._speed;
-		_agent.stoppingDistance = this._stoppingDist;
-		_agent.angularSpeed = 360f;
-		_agent.acceleration = 14f;
-	} 
-	#endregion
-
 	public void ApplyProfileData(SO_CustomerProfileData profileData)
 	{
 		this._agent.speed = profileData.walkSpeed;
 		this._agent.avoidancePriority = profileData.avoidancePriority;
 	}
-
 	// send agent toward destination
-	#region ref
-	Coroutine refTrackingRoutine; 
-	#endregion
 	public void MoveTo(Vector3 destination, Action onArrived = null)
 	{
 		this.CancelTracking();
@@ -47,17 +26,37 @@ public class NavMeshMover : MonoBehaviour
 	public void Stop()
 	{
 		this.CancelTracking();
-		if(this._agent.isOnNavMesh)
+		if (this._agent.isOnNavMesh)
 		{
 			this._agent.isStopped = true;
 			this._agent.ResetPath();
 		}
 	}
 
+	[SerializeField] float _speed = 3f;
+	[SerializeField] float _stoppingDist = 0.3f;
+	[SerializeField] float _arrivalTime = 20f;
+	[SerializeField] NavMeshAgent _agent = null;
 	#region private API
+	#region Unity Life Cycle
+	private void Awake()
+	{
+		Debug.Log(C.method(this));
+		this.InitAgent();
+	}
+	#endregion
+
+	void InitAgent()
+	{
+		_agent.speed = this._speed;
+		_agent.stoppingDistance = this._stoppingDist;
+		_agent.angularSpeed = 360f;
+		_agent.acceleration = 14f;
+	}
+	Coroutine refTrackingRoutine;
 	IEnumerator StartTrackingRoutine(Action onArrived)
 	{
-		for(float elapsed = 0f; elapsed < this._arrivalTime; elapsed += Time.deltaTime)
+		for (float elapsed = 0f; elapsed < this._arrivalTime; elapsed += Time.deltaTime)
 		{
 			bool hasArrived = (_agent.pathPending == false) && (_agent.remainingDistance <= _agent.stoppingDistance);
 			if (hasArrived)
@@ -72,7 +71,6 @@ public class NavMeshMover : MonoBehaviour
 		this.Stop();
 		onArrived?.Invoke();
 	}
-
 	void CancelTracking()
 	{
 		if (this.refTrackingRoutine != null)
