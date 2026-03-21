@@ -8,7 +8,7 @@ using SPACE_UTIL;
 public class CustomerAgent : MonoBehaviour
 {
 	// ── Assigned by spawner ───────────────────────────────────
-	[HideInInspector] public SO_CustomerProfileData Profile;
+	[HideInInspector] public SO_CustomerProfileData profileData;
 
 	[HideInInspector] public Transform entrancePoint;
 	[HideInInspector] public Transform exitPoint;
@@ -16,7 +16,7 @@ public class CustomerAgent : MonoBehaviour
 	public void ApplyProfileData(SO_CustomerProfileData profileData)
 	{
 		this.Mover.ApplyProfileData(profileData);
-		this.Profile = profileData;
+		this.profileData = profileData;
 	}
 
 	// ── Written/read by FSM ───────────────────────────────────

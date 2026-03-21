@@ -61,7 +61,7 @@ public class QueuePOI : MonoBehaviour, IPOI
 				return;
 			}
 		}
-	} 
+	}
 	#endregion
 
 	#region private API
@@ -83,7 +83,8 @@ public class QueuePOI : MonoBehaviour, IPOI
 	}
 
 	// self register with POIRegistry on enable
-	private void Start()
+	// private void Start()
+	private void OnEnable()
 	{
 		Debug.Log(C.method(this));
 		POIRegistry.Ins.RegisterQ(this);
@@ -120,8 +121,9 @@ public class QueuePOI : MonoBehaviour, IPOI
 			bool isOccupied = (DOC_OCCUPANTS[tr] == null);
 			Gizmos.color = (isOccupied) ? Color.red : Color.limeGreen;
 			Gizmos.DrawWireCube(tr.position, Vector3.one * 0.3f);
-			UnityEditor.Handles.Label(tr.position + Vector3.up * 0.5f, $"Q[{index}] {(isOccupied ? "": " ✓")}");
-	;	});
+			UnityEditor.Handles.Label(tr.position + Vector3.up * 0.5f, $"Q[{index}] {(isOccupied ? "" : " ✓")}");
+			;
+		});
 	}
 	#endregion
 }

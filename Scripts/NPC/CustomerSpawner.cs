@@ -68,8 +68,8 @@ public class CustomerSpawner : MonoBehaviour
 		// Debug.Log($"entrancePoint set done {Time.time}".colorTag("cyan"));
 
 		Debug.Log($"[CustomerSpawner] Spawned {go.name} " +
-				  $"[{agent.Profile?.id ?? "no profile"}] " +
-				  $"wait: {agent.Profile?.minQWaitSec}–{agent.Profile?.maxQWaitSec}s");
+				  $"[{agent.profileData?.id ?? "no profile"}] " +
+				  $"wait: {agent.profileData?.minQWaitSec}–{agent.profileData?.maxQWaitSec}s");
 
 	}
 }

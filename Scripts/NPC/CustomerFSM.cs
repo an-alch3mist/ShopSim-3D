@@ -33,7 +33,7 @@ public enum CustomerState
 
 public class CustomerFSM : MonoBehaviour
 {
-	bool hasDoneInit = false;
+	bool isStateCalledOnce = false;
 	bool isInProgressNav = false;
 	float waitInQueueTimer = 0f;
 	float waitInQueueDuration = 10f;
@@ -55,16 +55,16 @@ public class CustomerFSM : MonoBehaviour
 		else if (this.currState == CustomerState.waitInQueue) ExecStateWaitInQueue();
 		else if (this.currState == CustomerState.leaveStore) ExecStateLeaveStore();
 		else if (this.currState == CustomerState.walkOut) ExecStateWalkOut();
+		else if (this.currState == CustomerState.done) Debug.Log($"{owner.profileData.id} life cycle complete".colorTag("lime"));
 	}
 
 	void ExecStateWalkIn()
 	{
-		if (this.hasDoneInit == true)
+		#region call this state just once
+		if (this.isStateCalledOnce == true)
 			return;
-		hasDoneInit = true;
-		//
-		// Debug.Log($"require entrancePoint assign {Time.time} {owner.gameObject.name}".colorTag("cyan"));
-		// Debug.Log($"entrancePoint assigned exist {Time.time} {owner.gameObject.name}".colorTag("cyan"));
+		isStateCalledOnce = true; 
+		#endregion
 		isInProgressNav = true;
 		owner.Mover.MoveTo(owner.entrancePoint.position, onArrived: () =>
 		{
@@ -75,34 +75,17 @@ public class CustomerFSM : MonoBehaviour
 	}
 	void ExecStateJoinQueue()
 	{
-		if (this.hasDoneInit == true)
+		#region call this state just once
+		if (this.isStateCalledOnce == true)
 			return;
-		hasDoneInit = true;
+		isStateCalledOnce = true; 
+		#endregion
 		//
-		/*
-		QueuePOI poi = POIRegistry.Ins.GetFirstAvailableQueueWithSlot();
-		// retry
-		if(poi == null) // queue is full, retry next tick
-		{
-			hasDoneInit = false;
-			return;
-		}
-		
-		var slot = poi.BookSlot(owner);
-		
-		
-		// retry
-		if(slot == null) // overlap book from different agent
-		{
-			hasDoneInit = false;
-			return;
-		}
-		*/
 		QueuePOI poi = POIRegistry.Ins.GetFirstAvailableQueueWithSlots();
 		// retry
 		if (poi == null) // queue is full, retry next tick
 		{
-			hasDoneInit = false;
+			isStateCalledOnce = false;
 			return;
 		}
 		var slot = poi.BookSlot(owner);
@@ -116,7 +99,7 @@ public class CustomerFSM : MonoBehaviour
 			isInProgressNav = false;
 			GameEvents.RaiseCustomerJoinedQ(owner);
 			waitInQueueTimer = 0f;
-			waitInQueueDuration = C.Random(owner.Profile.minQWaitSec, owner.Profile.maxQWaitSec);
+			waitInQueueDuration = C.Random(owner.profileData.minQWaitSec, owner.profileData.maxQWaitSec);
 			TransitionTo(CustomerState.waitInQueue);
 		});
 	}
@@ -128,14 +111,7 @@ public class CustomerFSM : MonoBehaviour
 			if (owner.CurrentQueue == null)
 				Debug.Log(owner.gameObject.name + " null queue".colorTag("red"));
 
-			// LOG.H($"{owner.gameObject.name}");
-			// LOG.AddLog(owner.CurrentQueue.DOC_OCCUPANTS.ToTable(name: "DOC<>", toString: true));
-			//
 			owner.CurrentQueue.ReleaseSlot(owner);
-			//
-			// LOG.AddLog(owner.CurrentQueue.DOC_OCCUPANTS.ToTable(name: "DOC<>", toString: true));
-			// LOG.HEnd($"{owner.gameObject.name}");
-
 			owner.CurrentQueue = null;
 			owner.TrCurrentQueueSlot = null;
 
@@ -144,9 +120,9 @@ public class CustomerFSM : MonoBehaviour
 	}
 	void ExecStateLeaveStore()
 	{
-		if (this.hasDoneInit == true)
-			return;
-		hasDoneInit = true;
+		#region call this state just once
+		if (this.isStateCalledOnce == true) return; isStateCalledOnce = true; 
+		#endregion
 		//
 		isInProgressNav = true;
 		owner.Mover.MoveTo(owner.exitPoint.position, onArrived: () =>
@@ -158,9 +134,11 @@ public class CustomerFSM : MonoBehaviour
 	}
 	void ExecStateWalkOut()
 	{
-		if (this.hasDoneInit == true)
+		#region call this state just once
+		if (this.isStateCalledOnce == true)
 			return;
-		hasDoneInit = true;
+		isStateCalledOnce = true; 
+		#endregion
 		//
 		isInProgressNav = true;
 		owner.Mover.MoveTo(owner.despawnPoint.position, onArrived: () =>
@@ -180,7 +158,7 @@ public class CustomerFSM : MonoBehaviour
 		if (currState == next)
 			return;
 		Debug.Log($"[FSM] {gameObject.name}: {currState} → {next}");
-		hasDoneInit = false;
+		isStateCalledOnce = false;
 		currState = next;
 	} 
 	#endregion
