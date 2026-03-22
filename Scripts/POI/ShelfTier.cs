@@ -12,6 +12,7 @@ public class ShelfTier : MonoBehaviour
 
 	public bool isFull { get => occupied == capacity; }
 	public bool isEmpty { get => occupied == 0; }
+	public bool hasItem { get => occupied > 0; }
 	public SO_ItemData currItemData;
 
 	// ── Homogeneous rule check ───────────────────────────────

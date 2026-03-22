@@ -36,7 +36,7 @@ public class QueuePOI : MonoBehaviour, IPOI
 		return null;
 
 	}
-	public bool HasAnyAvailableSlot()
+	public bool HasSlotForBooking()
 	{
 		//int sum = 0;
 		//this.DOC_OCCUPANTS.forEach(kvp =>

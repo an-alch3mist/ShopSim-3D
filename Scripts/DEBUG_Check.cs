@@ -23,6 +23,7 @@ public class DEBUG_Check : MonoBehaviour
 		// yield return this.checkCustomerAgent();
 		// yield return this.checkCustomerAgent_1();
 		// yield return this.checkArray();
+		// yield return this.checkListExtension();
 
 		yield return null;
 	}
@@ -181,7 +182,6 @@ public class DEBUG_Check : MonoBehaviour
 
 		yield return null;
 	}
-
 	IEnumerator checkArray()
 	{
 		Board<GameObject> B_OBJ = new Board<GameObject>((10, 10), null);
@@ -198,5 +198,47 @@ public class DEBUG_Check : MonoBehaviour
 		});
 
 		yield return null;
+	}
+
+	IEnumerator checkListExtension()
+	{
+		List<Item> ITEM = new List<Item>()
+		{
+			new Item(){ id = "name-0", NUM = new List<int>() { 1000, 5 } },
+			new Item(){ id = "name-1", NUM = new List<int>() { +1, +2, +10, 300 } },
+			new Item(){ id = "name-2", NUM = new List<int>() { 3, 5, 100000, 500, 200 } },
+			new Item(){ id = "name-3", NUM = new List<int>() { 30, 50, 2000, 700, 200 } },
+		};
+
+		LOG.AddLog(ITEM.refine(item =>
+		{
+			return item.NUM.Count > 3;
+		}).ToTable(name: "LIST<> ITEM with refine"));
+		//
+		LOG.AddLog(ITEM.map(item =>
+		{
+			return item.NUM;
+		}).ToTable(name: "LIST<> ITEM with map"), "txt");
+		//
+		LOG.AddLog(ITEM.flatMap(item =>
+		{
+			return item.NUM;
+		}).ToTable(name: "LIST<> ITEM with flatMap"), "txt");
+		//
+		LOG.AddLog(ITEM.flatMap(item =>
+		{
+			return item.NUM;
+		}).rmdup().ToTable(name: "LIST<> ITEM with flatMap with rmdup"), "txt");
+		//
+		LOG.AddLog(ITEM.flatMap(item =>
+		{
+			return item.NUM;
+		}).rmdup(elem => elem.ToString().Length).ToTable(name: "LIST<> ITEM with flatMap with rmdup string length"), "txt");
+		yield return null;
+	}
+	class Item
+	{
+		public string id;
+		public List<int> NUM;
 	}
 }

@@ -18,7 +18,7 @@ public interface IPOI
 	string POIId { get; }
 
 	// true if at least one slot is unbooked
-	bool HasAnyAvailableSlot();
+	bool HasSlotForBooking();
 	// reserve earliest free slot, returns Transform or null if full
 	Transform BookSlot(CustomerAgent agent);
 	// release the slot this agent, item etc was holding

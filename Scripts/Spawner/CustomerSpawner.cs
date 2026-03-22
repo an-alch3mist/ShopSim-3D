@@ -54,14 +54,33 @@ public class CustomerSpawner : MonoBehaviour
 
 		SO_CustomerProfileData pickProfile = this._PROFILE.getRandom();
 
-		agent.entrancePoint = _Tr_entrancePoint;
-		agent.exitPoint = _Tr_exitPoint;
-		agent.despawnPoint = _Tr_despawnPoint;
+		agent.customerId = go.name;
+		agent.TrEntrancePoint = _Tr_entrancePoint;
+		agent.TrExitPoint = _Tr_exitPoint;
+		agent.TrDespawnPoint = _Tr_despawnPoint;
+		agent.shoppingList = this.BuildShoppingList();
 		agent.ApplyProfileData(pickProfile);
 
 		Debug.Log($"[CustomerSpawner] Spawned {go.name} " +
 				  $"[{agent.profileData?.id ?? "no profile"}] " +
 				  $"wait: {agent.profileData?.minQWaitSec}–{agent.profileData?.maxQWaitSec}s");
 
+	}
+
+	List<SO_ItemData> BuildShoppingList()
+	{
+		List<SO_ItemData> available = POIRegistry.Ins.GetAllStockedItemsOnShelves();
+		if (available.Count == 0) return new List<SO_ItemData>();
+
+		// Fisher-Yates shuffle
+		for (int i = available.Count - 1; i > 0; i -=1)
+		{
+			int j = C.Random(0, i); // in C.Random(min, max) both min and max are inclusive
+			(available[i], available[j]) = (available[j], available[i]);
+		}
+		int maxItemsPerCustomer = 5;
+		int cap = Mathf.Min(maxItemsPerCustomer, available.Count);
+		int count = C.Random(1, cap);
+		return available.GetRange(0, count);
 	}
 }
