@@ -52,14 +52,12 @@ public class CustomerSpawner : MonoBehaviour
 
 		CustomerAgent agent = go.GetComponent<CustomerAgent>();
 
-		// SO_CustomerProfileData pickProfile = this._PROFILE[Random.Range(0, this._PROFILE.Count)];
 		SO_CustomerProfileData pickProfile = this._PROFILE.getRandom();
 
 		agent.entrancePoint = _Tr_entrancePoint;
 		agent.exitPoint = _Tr_exitPoint;
 		agent.despawnPoint = _Tr_despawnPoint;
 		agent.ApplyProfileData(pickProfile);
-		// Debug.Log($"entrancePoint set done {Time.time}".colorTag("cyan"));
 
 		Debug.Log($"[CustomerSpawner] Spawned {go.name} " +
 				  $"[{agent.profileData?.id ?? "no profile"}] " +
