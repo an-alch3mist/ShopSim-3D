@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using SPACE_UTIL;
+using SPACE_DrawSystem;
 
 public class DEBUG_Check : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class DEBUG_Check : MonoBehaviour
 		// yield return this.checkBreak();
 		// yield return this.checkCustomerAgent();
 		// yield return this.checkCustomerAgent_1();
+		// yield return this.checkArray();
 
 		yield return null;
 	}
@@ -175,6 +177,24 @@ public class DEBUG_Check : MonoBehaviour
 					this._TrDestination.position + offset, () =>
 						Debug.Log($"agent [{idx}] scattered".colorTag("yellow")));
 			}
+		});
+
+		yield return null;
+	}
+
+	IEnumerator checkArray()
+	{
+		Board<GameObject> B_OBJ = new Board<GameObject>((10, 10), null);
+		LOG.AddLog(B_OBJ.ToString(detailed: true, elem => elem)); // ->  null error in console
+		LOG.AddLog(B_OBJ.ToString(detailed: true, elem => { return (elem == null) ? "None" : elem.name; })); // it works
+																											 //
+
+		GameObject[] OBJ = new GameObject[10];
+		LOG.AddLog(OBJ.ToTable(name: "LIST<> OBJ", toString: true), "txt"); // -> null error in console
+
+		OBJ.forEach((obj, index) =>
+		{
+			Line.create(index).setA(Vector3.zero).setB(Vector3.up + Vector3.right * index);
 		});
 
 		yield return null;
