@@ -49,8 +49,12 @@ public class AutoStockService : MonoBehaviour
 		foreach (var entry in this._STOCK_ENTRY)
 		{
 			if (entry.poi == null || entry.itemData == null || entry.count <= 0)
+			{
+				Debug.Log($"skipped {entry.poi.gameObject.name} {entry.tierIndex}".colorTag("orange"));
 				continue;
+			}
 			entry.poi.SetStockOnTier(entry.tierIndex, entry.itemData, entry.count);
+			LOG.AddLog(entry.poi.GetStockedItems().ToTable(name: "LIST<> autoStock"));
 			yield return new WaitForSeconds(_staggerDelay);
 		}
 		yield return null; // settle frame

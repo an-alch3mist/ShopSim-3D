@@ -43,7 +43,7 @@ public enum CustomerState
 {
 	// phase-0 >>
 	walkIn,
-	joinQueue,
+	bookAndJoinQueue,
 	waitInQueue,
 	leaveStore,
 	walkOut,
@@ -52,7 +52,7 @@ public enum CustomerState
 
 	// +phase-1 >>
 	selectItem,
-	navigateToShelf,
+	bookAndNavigateToShelf,
 	takeItem,
 	// << +phase-1
 }
@@ -71,16 +71,16 @@ public class CustomerFSM : MonoBehaviour
 		this.owner = agent;
 		this.currState = CustomerState.walkIn;
 	}
+	static int phaseDev = 1;
 	public void Tick()
 	{
 		if (this.isInProgressNav == true)
 			return;
 
-		int phaseDev = 0;
 		if (phaseDev == 0)
 		{
 				 if (this.currState == CustomerState.walkIn) ExecStateWalkIn();
-			else if (this.currState == CustomerState.joinQueue) ExecStateJoinQueue();
+			else if (this.currState == CustomerState.bookAndJoinQueue) ExecStateBookAndJoinQueue();
 			else if (this.currState == CustomerState.waitInQueue) ExecStateWaitInQueue();
 			else if (this.currState == CustomerState.leaveStore) ExecStateLeaveStore();
 			else if (this.currState == CustomerState.walkOut) ExecStateWalkOut();
@@ -94,9 +94,9 @@ public class CustomerFSM : MonoBehaviour
 		{
 				 if (this.currState == CustomerState.walkIn) ExecStateWalkIn();
 			else if (this.currState == CustomerState.selectItem) ExecStateSelectItem();
-			else if (this.currState == CustomerState.navigateToShelf) ExecStateNavigateToShelf();
+			else if (this.currState == CustomerState.bookAndNavigateToShelf) ExecStateBookAndNavigateToShelf();
 			else if (this.currState == CustomerState.takeItem) ExecStateTakeItem();
-			else if (this.currState == CustomerState.joinQueue) ExecStateJoinQueue();
+			else if (this.currState == CustomerState.bookAndJoinQueue) ExecStateBookAndJoinQueue();
 			else if (this.currState == CustomerState.waitInQueue) ExecStateWaitInQueue();
 			else if (this.currState == CustomerState.leaveStore) ExecStateLeaveStore();
 			else if (this.currState == CustomerState.walkOut) ExecStateWalkOut();
@@ -121,7 +121,10 @@ public class CustomerFSM : MonoBehaviour
 		{
 			isInProgressNav = false;
 			GameEvents.RaiseCustomerEntered(agent: owner);
-			TransitionTo(CustomerState.joinQueue);
+			if(phaseDev == 0)
+				TransitionTo(CustomerState.bookAndJoinQueue);
+			else
+				TransitionTo(CustomerState.selectItem);
 		});
 	}
 	#region Phase-1 ExecState 
@@ -130,10 +133,11 @@ public class CustomerFSM : MonoBehaviour
 	{
 		if(owner.shoppingList.Count == 0)
 		{
-			TransitionTo(CustomerState.joinQueue);
+			TransitionTo(CustomerState.bookAndJoinQueue);
 			return;
 		}
 
+		// LOG.AddLog(owner.shoppingList.ToTable(name: $"LIST<> ITEM shopping list on enter select item state, {owner.customerId}"));
 		SO_ItemData desiredItemData = owner.shoppingList[0];
 		ShelfPOI poi = POIRegistry.Ins.GetFirstShelfWithItemAndAvaiableNPCSlot(itemData: desiredItemData);
 
@@ -144,10 +148,12 @@ public class CustomerFSM : MonoBehaviour
 			return;
 		}
 		owner.currentTargetItem = desiredItemData;
+		// Debug.Log($"desired item: {desiredItemData.id}".colorTag("cyan"));
 		owner.currentShelfPOI = poi;
-		TransitionTo(CustomerState.navigateToShelf);
+		// Debug.Log($"currentShelfPOI: {poi.POIId}".colorTag("cyan"));
+		TransitionTo(CustomerState.bookAndNavigateToShelf);
 	}
-	void ExecStateNavigateToShelf()
+	void ExecStateBookAndNavigateToShelf()
 	{
 		#region call this state just once
 		if (isStateCalledOnce == true)
@@ -165,6 +171,11 @@ public class CustomerFSM : MonoBehaviour
 	}
 	void ExecStateTakeItem()
 	{
+		#region call this state just once
+		if (isStateCalledOnce == true)
+			return;
+		isStateCalledOnce = true;
+		#endregion
 		// transition made inside routine
 		StartCoroutine(RoutineTakeItem());
 	}
@@ -172,19 +183,20 @@ public class CustomerFSM : MonoBehaviour
 	{
 		yield return null;
 		yield return new WaitForSeconds(1f); // grab pause
-
+		Debug.Log(C.method(this, "magenta"));
 		owner.currentShelfPOI.TryTakeItem(owner.currentTargetItem);
 		owner.currentShelfPOI.ReleaseSlot(owner);
 		// item taken complete
 
 		owner.shoppingList.RemoveAt(0);
+		LOG.AddLog(owner.shoppingList.ToTable(name: $"LIST<> ITEM shopping list after item taken, {owner.customerId}"));
 
 		owner.currentTargetItem = null;
 		owner.currentShelfPOI = null;
 		TransitionTo(CustomerState.selectItem);
 	}
 	#endregion
-	void ExecStateJoinQueue()
+	void ExecStateBookAndJoinQueue()
 	{
 		#region call this state just once
 		if (this.isStateCalledOnce == true)

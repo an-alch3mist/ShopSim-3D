@@ -1,274 +1,134 @@
-* LIST<> ITEM with refine Count: 3
-~id      | ~NUM     
----------+----------
-name-1   | List: 4  
-name-2   | List: 4  
-name-3   | List: 5  
+* LIST<> autoStock Count: 1                                                                                                                                  
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
 
 
-```txt
-* LIST<> ITEM with map Count: 4                                                                 
-pri~_items   | pri~_size   | pri~_version   | pri~_syncRoot   | ~Capacity   | ~Count   | ~Item  
--------------+-------------+----------------+-----------------+-------------+----------+--------
-[]: 4        | 2           | 2              | null            | 4           | 2        | (n/a)  
-[]: 4        | 4           | 4              | null            | 4           | 4        | (n/a)  
-[]: 4        | 4           | 4              | null            | 4           | 4        | (n/a)  
-[]: 8        | 5           | 5              | null            | 8           | 5        | (n/a)  
-
-```
-
-```txt
-* LIST<> ITEM with flatMap with rmdup Count: 14
-pri~m_value  
--------------
-1000         
-5            
-1            
-2            
-10           
-300          
-3            
-100000       
-500          
-30           
-50           
-2000         
-700          
-200          
-
-```
-
-```txt
-* LIST<> ITEM with flatMap with rmdup string length Count: 5
-pri~m_value  
--------------
-1000         
-5            
-10           
-300          
-100000       
-
-```
-
-* LIST<> ITEM with refine Count: 3
-~id      | ~NUM     
----------+----------
-name-1   | List: 4  
-name-2   | List: 4  
-name-3   | List: 5  
+* LIST<> ITEM shopping list on spawn customer, customer-000 Count: 1                                                                                         
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
 
 
-```txt
-* LIST<> ITEM with map Count: 4                                                                 
-pri~_items   | pri~_size   | pri~_version   | pri~_syncRoot   | ~Capacity   | ~Count   | ~Item  
--------------+-------------+----------------+-----------------+-------------+----------+--------
-[]: 4        | 2           | 2              | null            | 4           | 2        | (n/a)  
-[]: 4        | 4           | 4              | null            | 4           | 4        | (n/a)  
-[]: 4        | 4           | 4              | null            | 4           | 4        | (n/a)  
-[]: 8        | 5           | 5              | null            | 8           | 5        | (n/a)  
-
-```
-
-```txt
-* LIST<> ITEM with flatMap Count: 15
-pri~m_value  
--------------
-1000         
-5            
-1            
-2            
-10           
-300          
-3            
-5            
-100000       
-500          
-30           
-50           
-2000         
-700          
-200          
-
-```
-
-```txt
-* LIST<> ITEM with flatMap with rmdup Count: 14
-pri~m_value  
--------------
-1000         
-5            
-1            
-2            
-10           
-300          
-3            
-100000       
-500          
-30           
-50           
-2000         
-700          
-200          
-
-```
-
-```txt
-* LIST<> ITEM with flatMap with rmdup string length Count: 5
-pri~m_value  
--------------
-1000         
-5            
-10           
-300          
-100000       
-
-```
-
-* LIST<> ITEM with refine Count: 3
-~id      | ~NUM     
----------+----------
-name-1   | List: 4  
-name-2   | List: 5  
-name-3   | List: 5  
+* LIST<> autoStock Count: 2                                                                                                                                        
+~id      | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                      | ~name                | ~hideFlags  
+---------+-------------+--------------+------------------------------------+--------------------------------------------------+----------------------+-------------
+milk     | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)     | SO_itemData milk     | None        
+butter   | butter      | 2            | RGBA(0.369, 0.878, 0.838, 1.000)   | cubeModel x0.1 butter (UnityEngine.GameObject)   | SO_itemData butter   | None        
 
 
-```txt
-* LIST<> ITEM with map Count: 4                                                                 
-pri~_items   | pri~_size   | pri~_version   | pri~_syncRoot   | ~Capacity   | ~Count   | ~Item  
--------------+-------------+----------------+-----------------+-------------+----------+--------
-[]: 4        | 2           | 2              | null            | 4           | 2        | (n/a)  
-[]: 4        | 4           | 4              | null            | 4           | 4        | (n/a)  
-[]: 8        | 5           | 5              | null            | 8           | 5        | (n/a)  
-[]: 8        | 5           | 5              | null            | 8           | 5        | (n/a)  
-
-```
-
-```txt
-* LIST<> ITEM with flatMap Count: 16
-pri~m_value  
--------------
-1000         
-5            
-1            
-2            
-10           
-300          
-3            
-5            
-100000       
-500          
-200          
-30           
-50           
-2000         
-700          
-200          
-
-```
-
-```txt
-* LIST<> ITEM with flatMap with rmdup Count: 14
-pri~m_value  
--------------
-1000         
-5            
-1            
-2            
-10           
-300          
-3            
-100000       
-500          
-200          
-30           
-50           
-2000         
-700          
-```
-
-```txt
-* LIST<> ITEM with flatMap with rmdup string length Count: 5
-pri~m_value  
--------------
-1000         
-5            
-10           
-300          
-100000       
-```
-
-* LIST<> ITEM with refine Count: 3
-~id      | ~NUM     
----------+----------
-name-1   | List: 4  
-name-2   | List: 5  
-name-3   | List: 5  
+* LIST<> ITEM shopping list on enter select item state, customer-000 Count: 1                                                                                
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
 
 
-```txt
-* LIST<> ITEM with map Count: 4                                                                 
-pri~_items   | pri~_size   | pri~_version   | pri~_syncRoot   | ~Capacity   | ~Count   | ~Item  
--------------+-------------+----------------+-----------------+-------------+----------+--------
-[]: 4        | 2           | 2              | null            | 4           | 2        | (n/a)  
-[]: 4        | 4           | 4              | null            | 4           | 4        | (n/a)  
-[]: 8        | 5           | 5              | null            | 8           | 5        | (n/a)  
-[]: 8        | 5           | 5              | null            | 8           | 5        | (n/a)  
+* LIST<> ITEM shopping list after item taken, customer-000: _list/hash/map/queue got no elem_
 
-```
+* LIST<> autoStock Count: 1                                                                                                                                  
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
 
-```txt
-* LIST<> ITEM with flatMap Count: 16
-pri~m_value  
--------------
-1000         
-5            
-1            
-2            
-10           
-300          
-3            
-5            
-100000       
-500          
-200          
-30           
-50           
-2000         
-700          
-200          
 
-```
+* LIST<> ITEM shopping list on spawn customer, customer-000 Count: 1                                                                                         
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
 
-```txt
-* LIST<> ITEM with flatMap with rmdup Count: 14
-pri~m_value  
--------------
-1000         
-5            
-1            
-2            
-10           
-300          
-3            
-100000       
-500          
-200          
-30           
-50           
-2000         
-700          
 
-```
+* LIST<> autoStock Count: 2                                                                                                                                        
+~id      | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                      | ~name                | ~hideFlags  
+---------+-------------+--------------+------------------------------------+--------------------------------------------------+----------------------+-------------
+milk     | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)     | SO_itemData milk     | None        
+butter   | butter      | 2            | RGBA(0.369, 0.878, 0.838, 1.000)   | cubeModel x0.1 butter (UnityEngine.GameObject)   | SO_itemData butter   | None        
 
-```txt
-* LIST<> ITEM with flatMap with rmdup string length Count: 5
-pri~m_value  
--------------
-1000         
-5            
-10           
-300          
-100000       
 
-```
+* LIST<> ITEM shopping list on enter select item state, customer-000 Count: 1                                                                                
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> ITEM shopping list after item taken, customer-000: _list/hash/map/queue got no elem_
+
+* LIST<> autoStock Count: 1                                                                                                                                  
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> ITEM shopping list on spawn customer, customer-000 Count: 1                                                                                         
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> autoStock Count: 2                                                                                                                                        
+~id      | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                      | ~name                | ~hideFlags  
+---------+-------------+--------------+------------------------------------+--------------------------------------------------+----------------------+-------------
+milk     | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)     | SO_itemData milk     | None        
+butter   | butter      | 2            | RGBA(0.369, 0.878, 0.838, 1.000)   | cubeModel x0.1 butter (UnityEngine.GameObject)   | SO_itemData butter   | None        
+
+
+* LIST<> ITEM shopping list on enter select item state, customer-000 Count: 1                                                                                
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> ITEM shopping list after item taken, customer-000: _list/hash/map/queue got no elem_
+
+* LIST<> autoStock Count: 1                                                                                                                                  
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> ITEM shopping list on spawn customer, customer-000 Count: 1                                                                                         
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> autoStock Count: 2                                                                                                                                        
+~id      | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                      | ~name                | ~hideFlags  
+---------+-------------+--------------+------------------------------------+--------------------------------------------------+----------------------+-------------
+milk     | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)     | SO_itemData milk     | None        
+butter   | butter      | 2            | RGBA(0.369, 0.878, 0.838, 1.000)   | cubeModel x0.1 butter (UnityEngine.GameObject)   | SO_itemData butter   | None        
+
+
+* LIST<> ITEM shopping list on spawn customer, customer-001 Count: 1                                                                                               
+~id      | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                      | ~name                | ~hideFlags  
+---------+-------------+--------------+------------------------------------+--------------------------------------------------+----------------------+-------------
+butter   | butter      | 2            | RGBA(0.369, 0.878, 0.838, 1.000)   | cubeModel x0.1 butter (UnityEngine.GameObject)   | SO_itemData butter   | None        
+
+
+* LIST<> ITEM shopping list on spawn customer, customer-002 Count: 1                                                                                         
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> ITEM shopping list on enter select item state, customer-000 Count: 1                                                                                
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> ITEM shopping list on enter select item state, customer-001 Count: 1                                                                                      
+~id      | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                      | ~name                | ~hideFlags  
+---------+-------------+--------------+------------------------------------+--------------------------------------------------+----------------------+-------------
+butter   | butter      | 2            | RGBA(0.369, 0.878, 0.838, 1.000)   | cubeModel x0.1 butter (UnityEngine.GameObject)   | SO_itemData butter   | None        
+
+
+* LIST<> ITEM shopping list after item taken, customer-000: _list/hash/map/queue got no elem_
+
+* LIST<> ITEM shopping list on enter select item state, customer-002 Count: 1                                                                                
+~id    | ~itemName   | ~basePrice   | ~displayColor                      | ~slotPrefab                                    | ~name              | ~hideFlags  
+-------+-------------+--------------+------------------------------------+------------------------------------------------+--------------------+-------------
+milk   | milk        | 1            | RGBA(0.731, 0.877, 0.368, 1.000)   | cubeModel x0.1 milk (UnityEngine.GameObject)   | SO_itemData milk   | None        
+
+
+* LIST<> ITEM shopping list after item taken, customer-002: _list/hash/map/queue got no elem_
 

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef0aa367e1c3134abc3dc8229d1e82f, type: 3}
   m_Name: SO_customerProfile
   m_EditorClassIdentifier: Assembly-CSharp::SO_CustomerProfileData
-  id: name
+  id: nox
   walkSpeed: 10
-  minQWaitSec: 20
-  maxQWaitSec: 30
+  minQWaitSec: 5
+  maxQWaitSec: 7
   avoidancePriority: 50

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda5fe748a9ceeb4da81a64e3f413294, type: 3}
+  m_Name: SO_itemData milk
+  m_EditorClassIdentifier: Assembly-CSharp::SO_ItemData
+  id: milk
+  itemName: milk
+  basePrice: 1
+  displayColor: {r: 0.73054785, g: 0.8773585, b: 0.36832502, a: 1}
+  slotPrefab: {fileID: 8647651993524727657, guid: b3b12171dd4c31e4ca6f5e7fb2edd501, type: 3}

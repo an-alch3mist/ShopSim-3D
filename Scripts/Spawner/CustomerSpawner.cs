@@ -29,13 +29,13 @@ public class CustomerSpawner : MonoBehaviour
 		this.StopAllCoroutines();
 		this.StartCoroutine(RoutineSpawn());
 	}
-
+	[SerializeField] int _spawnCustomerCount = 1;
 	IEnumerator RoutineSpawn()
 	{
-		while(C.Safe(100, "spawnLoop"))
+		while(C.Safe(this._spawnCustomerCount, "spawnLoop"))
 		{
 			this.SpawnOne();
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(2f);
 		}
 		yield return null;
 	}
@@ -59,28 +59,45 @@ public class CustomerSpawner : MonoBehaviour
 		agent.TrExitPoint = _Tr_exitPoint;
 		agent.TrDespawnPoint = _Tr_despawnPoint;
 		agent.shoppingList = this.BuildShoppingList();
+		LOG.AddLog(agent.shoppingList.ToTable(name: $"LIST<> ITEM shopping list on spawn customer, {agent.customerId}"));
 		agent.ApplyProfileData(pickProfile);
 
 		Debug.Log($"[CustomerSpawner] Spawned {go.name} " +
 				  $"[{agent.profileData?.id ?? "no profile"}] " +
 				  $"wait: {agent.profileData?.minQWaitSec}–{agent.profileData?.maxQWaitSec}s");
-
 	}
-
+	[Header("shopping list")]
+	[SerializeField] int _maxItemTypes = 3;  // distinct item types per customer
+	[SerializeField] int _maxQtyPerItemType = 3;  // max units of each type wanted
 	List<SO_ItemData> BuildShoppingList()
 	{
 		List<SO_ItemData> available = POIRegistry.Ins.GetAllStockedItemsOnShelves();
 		if (available.Count == 0) return new List<SO_ItemData>();
 
-		// Fisher-Yates shuffle
-		for (int i = available.Count - 1; i > 0; i -=1)
+		// Fisher-Yates shuffle the available pool
+		for (int i = available.Count - 1; i > 0; i -= 1)
 		{
-			int j = C.Random(0, i); // in C.Random(min, max) both min and max are inclusive
+			int j = C.Random(0, i); // C.Random is inclusive on both ends
 			(available[i], available[j]) = (available[j], available[i]);
 		}
-		int maxItemsPerCustomer = 5;
-		int cap = Mathf.Min(maxItemsPerCustomer, available.Count);
-		int count = C.Random(1, cap);
-		return available.GetRange(0, count);
+
+		// pick how many distinct item types this customer wants
+		int typeCount = C.Random(1, _maxItemTypes.clamp(1, available.Count));
+
+		List<SO_ItemData> list = new List<SO_ItemData>();
+		for (int i = 0; i < typeCount; i++)
+		{
+			SO_ItemData item = available[i];
+
+			// pick quantity of this type (1 to _maxQtyPerItemType)
+			int qty = C.Random(1, _maxQtyPerItemType);
+
+			for (int q = 0; q < qty; q++)
+				list.Add(item);
+			// result: [Milk, Milk, Apple, Apple, Apple, Bread]
+			// FSM pops one entry per purchase — naturally handles multi-quantity
+		}
+
+		return list;
 	}
 }

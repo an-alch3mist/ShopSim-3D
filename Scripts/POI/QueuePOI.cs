@@ -98,19 +98,6 @@ public class QueuePOI : MonoBehaviour, IPOI
 
 	private void OnDrawGizmosSelected()
 	{
-		/*
-		for (int i = 0; i < queueSlots.Count; i++)
-		{
-			if (queueSlots[i] == null) continue;
-			Gizmos.color = _occupants.ContainsKey(i) ? Color.red : Color.green;
-			Gizmos.DrawWireCube(queueSlots[i].position, Vector3.one * 0.4f);
-			if (i > 0 && queueSlots[i - 1] != null)
-				Gizmos.DrawLine(queueSlots[i - 1].position, queueSlots[i].position);
-			UnityEditor.Handles.Label(
-				queueSlots[i].position + Vector3.up * 0.55f,
-				$"Q{i}{(_occupants.ContainsKey(i) ? " ✓" : "")}");
-		}
-		*/
 		if (DOC_OCCUPANTS == null)
 			return;
 
@@ -118,10 +105,10 @@ public class QueuePOI : MonoBehaviour, IPOI
 		{
 			if (tr == null)
 				return;
-			bool isOccupied = (DOC_OCCUPANTS[tr] == null);
-			Gizmos.color = (isOccupied) ? Color.red : Color.limeGreen;
+			bool isEmpty = (DOC_OCCUPANTS[tr] == null);
+			Gizmos.color = (isEmpty) ? Color.red : Color.limeGreen;
 			Gizmos.DrawWireCube(tr.position, Vector3.one * 0.3f);
-			UnityEditor.Handles.Label(tr.position + Vector3.up * 0.5f, $"Q[{index}] {(isOccupied ? "" : " ✓")}");
+			UnityEditor.Handles.Label(tr.position + Vector3.up * 0.5f, $"Q[{index}] {(isEmpty ? "" : " ✓")}");
 			;
 		});
 	}

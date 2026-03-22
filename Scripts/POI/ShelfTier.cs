@@ -8,7 +8,7 @@ public class ShelfTier : MonoBehaviour
 {
 	public int capacity = 10;
 	public int occupied;
-	public float slotSpacing = 0.25f;
+	[SerializeField] float _slotSpacing = 0.25f;
 
 	public bool isFull { get => occupied == capacity; }
 	public bool isEmpty { get => occupied == 0; }
@@ -28,7 +28,12 @@ public class ShelfTier : MonoBehaviour
 	// clears existing visuals then spawns `count` units of item
 	public void InitStock(SO_ItemData itemData, int count)
 	{
-
+		this.ClearTierStocks();
+		this.currItemData = itemData;
+		int spawnCount = Mathf.Min(count, this.capacity);
+		for (int i0 = 0; i0 < spawnCount; i0 += 1)
+			this.SpawnAt(i0, itemData);
+		this.occupied = spawnCount;
 	}
 	// ── Public mutation ──────────────────────────────────────
 	// add one unit; caller must call CanAccept first
@@ -65,12 +70,14 @@ public class ShelfTier : MonoBehaviour
 		return true;
 	}
 	// destroy all visuals, reset state
-	public void Clear()
+	public void ClearTierStocks()
 	{
-		foreach (var go in OBJ_SLOT)
-			if (go != null)
-				GameObject.Destroy(go);
-		OBJ_SLOT = new GameObject[capacity];
+		for(int i0 = 0; i0 < OBJ_SLOT.Length; i0 += 1)
+			if(OBJ_SLOT[i0] != null)
+			{
+				GameObject.Destroy(OBJ_SLOT[i0]);
+				OBJ_SLOT[i0] = null;
+			}
 		occupied = 0;
 		currItemData = null;
 	}
@@ -82,8 +89,8 @@ public class ShelfTier : MonoBehaviour
 	// world-space center of slot i, centered on board local X
 	private Vector3 SlotPosition(int index)
 	{
-		float totalWidth = (capacity - 1) * slotSpacing;
-		float localX = -totalWidth * 0.5f + index * slotSpacing;
+		float totalWidth = (capacity - 1) * _slotSpacing;
+		float localX = -totalWidth * 0.5f + index * _slotSpacing;
 		// +0.1f lifts item to sit flush on board surface (half of 0.2-tall cube)
 		return transform.TransformPoint(new Vector3(localX, 0.1f, 0f));
 	}
@@ -96,8 +103,11 @@ public class ShelfTier : MonoBehaviour
 			Debug.LogWarning($"[ShelfTier] {name}: SO_ItemData '{data.id}' has no slotPrefab.");
 			return;
 		}
-		OBJ_SLOT[index] = Instantiate(data.slotPrefab, SlotPosition(index),
-								 transform.rotation, transform);
+		OBJ_SLOT[index] = GameObject.Instantiate(
+			original: data.slotPrefab, 
+			position: SlotPosition(index),
+			rotation: transform.rotation, 
+			parent: transform);
 		TintSlot(OBJ_SLOT[index], data.displayColor);
 	}
 	private static void TintSlot(GameObject go, Color color)

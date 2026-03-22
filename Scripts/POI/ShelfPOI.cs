@@ -26,7 +26,7 @@ public class ShelfPOI : MonoBehaviour, IPOI
 	public string POIId => this._POIId;
 	public Transform BookSlot(CustomerAgent agent)
 	{
-		Debug.Log(C.method(this, "lime", adMssg: agent.gameObject.name));
+		Debug.Log(C.method(this, "lime", adMssg: $"{this.POIId} booked by {agent.gameObject.name}"));
 		if (this.occupant != null)
 			return null;
 		this.occupant = agent;
@@ -112,8 +112,11 @@ public class ShelfPOI : MonoBehaviour, IPOI
 	public bool TryTakeItem(SO_ItemData itemData)
 	{
 		ShelfTier tier = this.GetTierForBuying(itemData);
+		Debug.Log(tier.tryNullToString());
 		if (tier == null)
 			return false;
+		Debug.Log(C.method(this, "cyan", adMssg: $"{tier.gameObject.name} for {itemData.id}"));
+
 
 		bool itemRemoved = tier.RemoveOne(this);
 		if (itemRemoved == true)
@@ -155,7 +158,7 @@ public class ShelfPOI : MonoBehaviour, IPOI
 
 	private void OnDrawGizmos()
 	{
-		if (TIER.Count == 0)
+		if ((TIER.Count == 0) || (_Tr_interactionPoint == null))
 			return;
 
 		bool hasStockAny = (this.TIER.refine(tier => tier.hasItem).ToList().Count > 0);
@@ -163,7 +166,7 @@ public class ShelfPOI : MonoBehaviour, IPOI
 		Gizmos.DrawWireSphere(this.transform.position + Vector3.up * 1.5f, 0.25f);
 
 		Gizmos.color = Color.cyan;
-		Gizmos.DrawWireCube(_Tr_interactionPoint.position, Vector3.one * 0.18f);
+		Gizmos.DrawWireCube(_Tr_interactionPoint.position, new Vector3(0.18f, 0.3f, 0.18f));
 
 		TIER.forEach((tier, index) =>
 		{

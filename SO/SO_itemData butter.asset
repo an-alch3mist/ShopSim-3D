@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dda5fe748a9ceeb4da81a64e3f413294, type: 3}
+  m_Name: SO_itemData butter
+  m_EditorClassIdentifier: Assembly-CSharp::SO_ItemData
+  id: butter
+  itemName: butter
+  basePrice: 2
+  displayColor: {r: 0.36862752, g: 0.8784314, b: 0.8381646, a: 1}
+  slotPrefab: {fileID: 8647651993524727657, guid: 3cd1118a847558f4fbd7a824ae4bc945, type: 3}
