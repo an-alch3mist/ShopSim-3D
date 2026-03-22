@@ -35,7 +35,7 @@ public class CustomerSpawner : MonoBehaviour
 		while(C.Safe(100, "spawnLoop"))
 		{
 			this.SpawnOne();
-			yield return new WaitForSeconds(2f);
+			yield return new WaitForSeconds(0.5f);
 		}
 		yield return null;
 	}
@@ -47,16 +47,10 @@ public class CustomerSpawner : MonoBehaviour
 		Quaternion rot = _Tr_spawnPoint.rotation;
 
 		GameObject go = GameObject.Instantiate(pfCustomer, pos, rot);
-		go.name = $"Customer_{spawnedCount:D2}";
+		go.name = $"customer-{spawnedCount:D3}";
 		spawnedCount += 1;
 
 		CustomerAgent agent = go.GetComponent<CustomerAgent>();
-		if (agent == null)
-		{
-			Debug.LogError("[CustomerSpawner] Prefab missing CustomerAgent!".colorTag("red"));
-			Destroy(go);
-			return;
-		}
 
 		// SO_CustomerProfileData pickProfile = this._PROFILE[Random.Range(0, this._PROFILE.Count)];
 		SO_CustomerProfileData pickProfile = this._PROFILE.getRandom();

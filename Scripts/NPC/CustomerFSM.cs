@@ -49,13 +49,16 @@ public class CustomerFSM : MonoBehaviour
 	{
 		if (this.isInProgressNav == true)
 			return;
-
 			 if (this.currState == CustomerState.walkIn) ExecStateWalkIn();
 		else if (this.currState == CustomerState.joinQueue) ExecStateJoinQueue();
 		else if (this.currState == CustomerState.waitInQueue) ExecStateWaitInQueue();
 		else if (this.currState == CustomerState.leaveStore) ExecStateLeaveStore();
 		else if (this.currState == CustomerState.walkOut) ExecStateWalkOut();
-		else if (this.currState == CustomerState.done) Debug.Log($"{owner.profileData.id} life cycle complete".colorTag("lime"));
+		else if (this.currState == CustomerState.done)
+		{
+			// done
+			Debug.Log($"{owner.profileData.id} life cycle complete".colorTag("lime"));
+		}
 	}
 
 	void ExecStateWalkIn()
@@ -94,7 +97,7 @@ public class CustomerFSM : MonoBehaviour
 		owner.TrCurrentQueueSlot = slot;
 		isInProgressNav = true;
 
-		owner.Mover.MoveTo(slot.position, onArrived: () =>
+		owner.Mover.MoveTo(slot.position.xz(), onArrived: () =>
 		{
 			isInProgressNav = false;
 			GameEvents.RaiseCustomerJoinedQ(owner);
