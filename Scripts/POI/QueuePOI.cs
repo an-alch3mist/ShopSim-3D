@@ -108,8 +108,9 @@ public class QueuePOI : MonoBehaviour, IPOI
 			bool isEmpty = (DOC_OCCUPANTS[tr] == null);
 			Gizmos.color = (isEmpty) ? Color.red : Color.limeGreen;
 			Gizmos.DrawWireCube(tr.position, Vector3.one * 0.3f);
+# if UNITY_EDITOR
 			UnityEditor.Handles.Label(tr.position + Vector3.up * 0.5f, $"Q[{index}] {(isEmpty ? "" : " ✓")}");
-			;
+#endif
 		});
 	}
 	#endregion

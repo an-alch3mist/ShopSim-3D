@@ -47,10 +47,12 @@ public class CustomerAgent : MonoBehaviour
 	private void OnDrawGizmosSelected()
 	{
 		if (TrCurrentQueueSlot == null) return;
+#if UNITY_EDITOR
 		UnityEditor.Handles.color = new Color(1f, 0.5f, 0f);
 		UnityEditor.Handles.DrawDottedLine(
 			this.transform.position + Vector3.up,
 			TrCurrentQueueSlot.position + Vector3.up, 3f);
+#endif
 	}
 
 	/*

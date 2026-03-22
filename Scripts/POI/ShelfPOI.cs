@@ -173,8 +173,10 @@ public class ShelfPOI : MonoBehaviour, IPOI
 			string label = tier.currItemData != null
 					? $"[{index}] {tier.currItemData.itemName} {tier.occupied}/{tier.capacity}"
 					: $"[{index}] free";
+#if UNITY_EDITOR
 			UnityEditor.Handles.Label(
 				tier.transform.position + Vector3.up * 0.55f, label);
+#endif
 		});
 	}
 	#endregion

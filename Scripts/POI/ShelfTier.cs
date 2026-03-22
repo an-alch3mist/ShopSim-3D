@@ -141,7 +141,9 @@ public class ShelfTier : MonoBehaviour
 		string label = currItemData != null
 			? $"{currItemData.itemName} {occupied}/{capacity}"
 			: $"[free] 0/{capacity}";
+#if UNITY_EDITOR
 		UnityEditor.Handles.Label(transform.position + Vector3.up * 0.45f, label);
+#endif
 	} 
 	#endregion
 
