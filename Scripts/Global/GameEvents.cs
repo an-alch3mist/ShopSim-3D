@@ -22,12 +22,13 @@ The three things the comments nail down for each event:
 */
 public static class GameEvents
 {
+	#region Phase-0
 	// ┌───────────────────────────────────────────────────────────┐
 	// │  CustomerFSM (WalkIn state)                               │
 	// │       │                                                   │
 	// │  GameEvents.RaiseCustomerEntered(this)					   │
 	// │       │                                                   │
-	// │       ├──► StoreManager   → _customersInsideCount++       │
+	// │       ├──► StoreManager   → _customersInsideCount += 1       │
 	// │       └──► DebugLogger    → Debug.Log(agent.name)         │
 	// │                                                           │
 	// │  agent = the specific CustomerAgent that crossed entrance.│
@@ -86,4 +87,45 @@ public static class GameEvents
 		OnCustomerLeft?
 			.Invoke(agent);
 	}
+	#endregion
+
+	#region Phase-1
+	// ┌──────────────────────────────────────────────────────────┐
+	// │  ShelfPOI / ShelfTier (TryTakeItem)                      │
+	// │    └─ RaiseItemTaken(poi, tier, data)                    │
+	// │         ├──► StoreManager  → track units sold            │
+	// │         └──► ShelfUI       → refresh stock badge         │
+	// └──────────────────────────────────────────────────────────┘
+	public static event Action<ShelfPOI, ShelfTier, SO_ItemData> OnItemTaken;
+	public static void RaiseItemTaken(ShelfPOI poi, ShelfTier tier, SO_ItemData data)
+	{
+		GameEvents.OnItemTaken?
+			.Invoke(poi, tier, data);
+	}
+
+	// ┌──────────────────────────────────────────────────────────┐
+	// │  ShelfTier (RemoveOne — when tier hits zero)             │
+	// │    └─ RaiseShelfTierCleared(poi, tier)					  │
+	// │         └──► ShelfUI  → show "needs restock" badge       │
+	// │              (Phase 2: player stocking highlight)        │
+	// └──────────────────────────────────────────────────────────┘
+	public static event Action<ShelfPOI, ShelfTier> OnShelfTierCleared;
+	public static void RaiseShelfTierCleared(ShelfPOI poi, ShelfTier tier)
+	{
+		GameEvents.OnShelfTierCleared?
+			.Invoke(poi, tier);
+	}
+
+	// ┌──────────────────────────────────────────────────────────┐
+	// │  AutoStockService / ShelfPOI (SetStock / AddStock)       │
+	// │    └─ RaiseShelfRestocked(poi, tier, data, count)		  │
+	// │         └──► ShelfUI  → refresh count display            │
+	// └──────────────────────────────────────────────────────────┘
+	public static event Action<ShelfPOI, ShelfTier, SO_ItemData, int> OnShelfRestocked;
+	public static void RaiseShelfRestocked(ShelfPOI poi, ShelfTier tier, SO_ItemData data, int count)
+	{
+		GameEvents.OnShelfRestocked?
+			.Invoke(poi, tier, data, count);
+	}
+	#endregion
 }
