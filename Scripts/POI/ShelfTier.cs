@@ -74,6 +74,7 @@ public class ShelfTier : MonoBehaviour
 		currItemData = null;
 	}
 
+
 	#region private API
 	private GameObject[] OBJ_SLOT;
 	// ── Slot position ────────────────────────────────────────
