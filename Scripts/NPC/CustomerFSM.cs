@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +40,27 @@ hasDoneInit  — reset on each TransitionTo; entry code runs once per state.
 isInProgressNav — true while NavMeshMover callback pending; Tick() no-ops.
 */
 
+/*
+## Phase-1 state flow:
+
+walkIn
+└─► selectItem ◄───────────────────────────────────────────┐
+		│                                                  │
+		├─ item found, shelf free ──► navigateToShelf      │
+		│                                └─► takeItem ─────┘
+		│
+		├─ item has stock, shelf BUSY
+		│     └─ _deferCount < list.Count → rotate list, retry next tick
+		│     └─ _deferCount >= list.Count → all items blocked, wait + reset
+		│
+		├─ item out of stock → RemoveAll that item from list, retry
+		│
+		└─ list empty ──► joinQueue
+							  └─► waitInQueue
+									  └─► leaveStore
+											  └─► walkOut → Destroy
+*/
+
 public enum CustomerState
 {
 	// phase-0 >>
@@ -63,6 +85,7 @@ public class CustomerFSM : MonoBehaviour
 	bool isInProgressNav = false;
 	float waitInQueueTimer = 0f;
 	float waitInQueueDuration = 10f;
+	int _deferCount = 0;   // how many items deferred in current selectItem pass
 
 	CustomerAgent owner;
 	public CustomerState currState { get; private set; }
@@ -131,26 +154,54 @@ public class CustomerFSM : MonoBehaviour
 	// runs every tick until list resolved
 	void ExecStateSelectItem()
 	{
+		// shopping list completed
 		if(owner.shoppingList.Count == 0)
 		{
+			_deferCount = 0;
 			TransitionTo(CustomerState.bookAndJoinQueue);
 			return;
 		}
 
 		// LOG.AddLog(owner.shoppingList.ToTable(name: $"LIST<> ITEM shopping list on enter select item state, {owner.customerId}"));
 		SO_ItemData desiredItemData = owner.shoppingList[0];
-		ShelfPOI poi = POIRegistry.Ins.GetFirstShelfWithItemAndAvaiableNPCSlot(itemData: desiredItemData);
-
-		if(poi == null)
+		// ── case 1: item genuinely out of stock ──────────────
+		bool stockExists = POIRegistry.Ins.AnyShelfHasStockOf(desiredItemData);
+		if (!stockExists)
 		{
-			// either out of stock, or that itemData shelfTier poi is occupied by other NPC
+			Debug.Log($"[FSM] {owner.customerId}: {desiredItemData.id} out of stock — removing all copies".colorTag("orange"));
+			// owner.shoppingList.RemoveAll(i => i == desired);
+			owner.shoppingList = owner.shoppingList.refine(item => (item != desiredItemData)).ToList();
+			_deferCount = 0;
+			return; // re-evaluate next tick
+		}
+
+		// ── case 2: stock exists, find a shelf with free slot ─
+		ShelfPOI poi = POIRegistry.Ins.GetFirstShelfWithItemAndAvaiableNPCSlot(itemData: desiredItemData);
+		if (poi == null)
+		{
+			// stock exists but every matching shelf slot is busy
+			_deferCount += 1;
+
+			if (_deferCount >= owner.shoppingList.Count)
+			{
+				// tried every item in list — all shelves blocked, wait a tick then reset
+				Debug.Log($"[FSM] {owner.customerId}: all {owner.shoppingList.Count} items blocked — waiting".colorTag("yellow"));
+				_deferCount = 0;
+				return;
+			}
+
+			// rotate: push current item to end of list, try next one next tick
+			SO_ItemData deferred = owner.shoppingList[0];
 			owner.shoppingList.RemoveAt(0);
+			owner.shoppingList.Add(deferred);
+			Debug.Log($"[FSM] {owner.customerId}: {desiredItemData.id} shelf busy — deferred (count: {_deferCount})".colorTag("yellow"));
 			return;
 		}
+
+		// ── case 3: found shelf with stock and free slot ──────
+		_deferCount = 0;
 		owner.currentTargetItem = desiredItemData;
-		// Debug.Log($"desired item: {desiredItemData.id}".colorTag("cyan"));
 		owner.currentShelfPOI = poi;
-		// Debug.Log($"currentShelfPOI: {poi.POIId}".colorTag("cyan"));
 		TransitionTo(CustomerState.bookAndNavigateToShelf);
 	}
 	void ExecStateBookAndNavigateToShelf()
@@ -160,7 +211,20 @@ public class CustomerFSM : MonoBehaviour
 			return;
 		isStateCalledOnce = true;
 		#endregion
+
+		// BookSlot can return null if another NPC grabbed the slot between
+		// selectItem and here (race condition between two agents)
 		Transform trSlot = owner.currentShelfPOI.BookSlot(owner);
+		if (trSlot == null)
+		{
+			// slot gone — go back to selectItem to find another shelf
+			Debug.Log($"[FSM] {owner.customerId}: slot stolen — returning to selectItem".colorTag("orange"));
+			isStateCalledOnce = false;
+			owner.currentShelfPOI = null;
+			owner.currentTargetItem = null;
+			TransitionTo(CustomerState.selectItem);
+			return;
+		}
 
 		isInProgressNav = true;
 		owner.Mover.MoveTo(trSlot.position.xz(), onArrived: () =>
@@ -189,7 +253,7 @@ public class CustomerFSM : MonoBehaviour
 		// item taken complete
 
 		owner.shoppingList.RemoveAt(0);
-		LOG.AddLog(owner.shoppingList.ToTable(name: $"LIST<> ITEM shopping list after item taken, {owner.customerId}"));
+		// LOG.AddLog(owner.shoppingList.ToTable(name: $"LIST<> ITEM shopping list after item taken, {owner.customerId}"));
 
 		owner.currentTargetItem = null;
 		owner.currentShelfPOI = null;

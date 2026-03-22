@@ -54,7 +54,7 @@ public class AutoStockService : MonoBehaviour
 				continue;
 			}
 			entry.poi.SetStockOnTier(entry.tierIndex, entry.itemData, entry.count);
-			LOG.AddLog(entry.poi.GetStockedItems().ToTable(name: "LIST<> autoStock"));
+			// LOG.AddLog(entry.poi.GetStockedItems().ToTable(name: "LIST<> autoStock"));
 			yield return new WaitForSeconds(_staggerDelay);
 		}
 		yield return null; // settle frame

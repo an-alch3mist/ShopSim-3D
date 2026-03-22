@@ -59,6 +59,7 @@ public class CustomerSpawner : MonoBehaviour
 		agent.TrExitPoint = _Tr_exitPoint;
 		agent.TrDespawnPoint = _Tr_despawnPoint;
 		agent.shoppingList = this.BuildShoppingList();
+		// LOG.AddLog the shoppingList.
 		LOG.AddLog(agent.shoppingList.ToTable(name: $"LIST<> ITEM shopping list on spawn customer, {agent.customerId}"));
 		agent.ApplyProfileData(pickProfile);
 

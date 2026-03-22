@@ -45,6 +45,9 @@ public class POIRegistry : MonoBehaviour
 		return SHELF
 					.find(shelf => shelf.HasStockOfItem(itemData) && shelf.HasSlotForBooking());
 	}
+	// stock exists regardless of slot state — used to distinguish busy vs out-of-stock
+	public bool AnyShelfHasStockOf(SO_ItemData itemData) =>
+		SHELF.findIndex(shelf => shelf.HasStockOfItem(itemData)) != -1;
 	// all distinct item types currently stocked across all shelves
 	public List<SO_ItemData> GetAllStockedItemsOnShelves()
 	{
