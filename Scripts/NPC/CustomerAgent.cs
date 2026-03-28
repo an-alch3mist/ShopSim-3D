@@ -54,15 +54,4 @@ public class CustomerAgent : MonoBehaviour
 			TrCurrentQueueSlot.position + Vector3.up, 3f);
 #endif
 	}
-
-	/*
-	public override string ToString()
-	{
-		// return base.ToString();
-		if (CurrentQueue != null)
-			return $"{Profile.id}: {CurrentQueue}";
-		else
-			return $"{Profile.id}: {null}";
-	}
-	*/
 }

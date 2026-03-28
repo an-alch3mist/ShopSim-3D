@@ -34,8 +34,9 @@ public class CustomerSpawner : MonoBehaviour
 	{
 		while(C.Safe(this._spawnCustomerCount, "spawnLoop"))
 		{
-			this.SpawnOne();
 			yield return new WaitForSeconds(2f);
+			Debug.Log($"spawned a customer".colorTag("lime"));
+			this.SpawnOne();
 		}
 		yield return null;
 	}
@@ -60,8 +61,9 @@ public class CustomerSpawner : MonoBehaviour
 		agent.TrDespawnPoint = _Tr_despawnPoint;
 		agent.shoppingList = this.BuildShoppingList();
 		// LOG.AddLog the shoppingList.
-		LOG.AddLog(agent.shoppingList.ToTable(name: $"LIST<> ITEM shopping list on spawn customer, {agent.customerId}"));
+		// LOG.AddLog(agent.shoppingList.ToTable(name: $"LIST<> ITEM shopping list on spawn customer, {agent.customerId}"));
 		agent.ApplyProfileData(pickProfile);
+		
 
 		Debug.Log($"[CustomerSpawner] Spawned {go.name} " +
 				  $"[{agent.profileData?.id ?? "no profile"}] " +
@@ -73,6 +75,8 @@ public class CustomerSpawner : MonoBehaviour
 	List<SO_ItemData> BuildShoppingList()
 	{
 		List<SO_ItemData> available = POIRegistry.Ins.GetAllStockedItemsOnShelves();
+		LOG.AddLog(available.ToTable(name: "LIST<SO_ItemData> get all stocked items on the shelves"));
+
 		if (available.Count == 0) return new List<SO_ItemData>();
 
 		// Fisher-Yates shuffle the available pool
