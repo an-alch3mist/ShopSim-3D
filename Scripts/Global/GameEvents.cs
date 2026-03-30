@@ -128,4 +128,28 @@ public static class GameEvents
 			.Invoke(poi, tier, data, count);
 	}
 	#endregion
+
+	#region Phase-1.1
+	// ┌──────────────────────────────────────────────────────────┐
+	// │  PlayerStockingController (TryStockNearest)              │
+	// │    └─ RaisePlayerStockAttempted(data, success)           │
+	// │         ├──► StockingUI  → flash green/red indicator     │
+	// │         ├──► AudioManager → play place/deny sfx          │
+	// │         └──► InventoryManager → deduct item from hand    │
+	// │                                                          │
+	// │  Fires AFTER TryReceiveStock so 'success' reflects the   │
+	// │  actual shelf acceptance, not just the keypress.         │
+	// │                                                          │
+	// │  Note: OnShelfRestocked also fires on success (from      │
+	// │  ShelfPOI.TryStockItem). Listeners that only care about  │
+	// │  shelf state use OnShelfRestocked; listeners that care   │
+	// │  about player action feedback use this one.              │
+	// └──────────────────────────────────────────────────────────┘
+	public static event Action<SO_ItemData, bool> OnPlayerStockSendAttempted;
+	public static void RaisePlayerStockSendAttempted(SO_ItemData itemData, bool isNearestStockableSuccess)
+	{
+		GameEvents.OnPlayerStockSendAttempted?
+			.Invoke(itemData, isNearestStockableSuccess);
+	}
+	#endregion
 }

@@ -11,8 +11,11 @@ using SPACE_UTIL;
 //  Ordered queue of Transform slots.
 //  Index 0 = front (close to counter side).
 //  Self-registers with POIRegistry on enable.
+//
+//  IStockable delegates to existing TryStockItem so all
+//  GameEvents (RaiseShelfRestocked) fire from one place.
 // ============================================================
-public class ShelfPOI : MonoBehaviour, IPOI
+public class ShelfPOI : MonoBehaviour, IPOI, IStockable
 {
 	[SerializeField] string _POIId = "shelf-id";
 	[Tooltip(tooltip: "index 0 -> lower board, index 1 -> higher board ....")]
@@ -24,6 +27,7 @@ public class ShelfPOI : MonoBehaviour, IPOI
 
 	#region IPOI
 	public string POIId => this._POIId;
+
 	public Transform BookSlot(CustomerAgent agent)
 	{
 		Debug.Log(C.method(this, "lime", adMssg: $"{this.POIId} booked by {agent.gameObject.name}"));
@@ -181,7 +185,17 @@ public class ShelfPOI : MonoBehaviour, IPOI
 	}
 	#endregion
 
-	#region private API
+	#region IStockable
+	public string stockableId =>  $"{this.gameObject.name}--stockable-id";
 
+	public bool CanRecieveStock(SO_ItemData itemData)
+	{
+		return this.GetTierForStocking(itemData) != null;
+	}
+
+	public bool TryReciveStock(SO_ItemData itemData)
+	{
+		return this.TryStockItem(itemData);
+	} 
 	#endregion
 }
