@@ -126,57 +126,12 @@ namespace SPACE_MineMGL
 			this.ClearLeaf(this._cartListHolder);
 			this.CART_ITEM_BUTTON.Clear();
 		}
-		public void AddToCart(ShopItem item, int quantity = 1)
-		{
-			var existingCartItem = this.FindCartItem(item);
-			if(existingCartItem != null)
-			{
-				existingCartItem.ChangeQuantity(existingCartItem.GetQuantity() + quantity);
-				return;
-			}
-
-			var cartItemButton = GameObject.Instantiate(this._pfCartItem, this._cartListHolder)
-											.gc<ShopCartItemButton>();
-			cartItemButton.Init(this, quantity, item);
-			this.CART_ITEM_BUTTON.Add(cartItemButton);
-		}
-		void RemoveFromCart(ShopCartItemButton cartItemButton)
-		{
-			this.CART_ITEM_BUTTON.Remove(cartItemButton);
-			GameObject.Destroy(cartItemButton.gameObject);
-		}
 		ShopCartItemButton FindCartItem(ShopItem item)
 		{
 			foreach (var cartItemButton in this.CART_ITEM_BUTTON)
 				if (cartItemButton.shopItem == item)
 					return cartItemButton;
 			return null;
-		}
-		public void PurchaseCart()
-		{
-			if(this.CanAffordCart() == false)
-			{
-				Debug.Log("cannot afford cart contents.".colorTag("orange"));
-				return;
-			}
-
-			var toProcess = new List<ShopCartItemButton>(this.CART_ITEM_BUTTON);
-			toProcess.forEach(cartItemButton =>
-			{
-				ShopItem item = cartItemButton.shopItem;
-				int qty = cartItemButton.GetQuantity();
-				float cost = item.GetPrice() * qty;
-
-				if(this.TrySpawnItem(item.itemDef, qty)) // if there any spawn points
-				{
-					Singleton<EconomyManager>.Ins.AddMoney(-cost);
-					item.AddPurchasedQuantity(qty);
-					CART_ITEM_BUTTON.Remove(cartItemButton);
-					GameObject.Destroy(cartItemButton.gameObject);
-					GameEvents.RaiseItemPurchased();
-				}
-			});
-			this.RefreshCurrency();
 		}
 
 		void ClearLeaf(Transform holder)
@@ -214,6 +169,51 @@ namespace SPACE_MineMGL
 
 		#region public API
 		public float getTotalCartPrice { get; private set; }
+		public void PurchaseCart()
+		{
+			if(this.CanAffordCart() == false)
+			{
+				Debug.Log("cannot afford cart contents.".colorTag("orange"));
+				return;
+			}
+
+			var toProcess = new List<ShopCartItemButton>(this.CART_ITEM_BUTTON);
+			toProcess.forEach(cartItemButton =>
+			{
+				ShopItem item = cartItemButton.shopItem;
+				int qty = cartItemButton.GetQuantity();
+				float cost = item.GetPrice() * qty;
+
+				if(this.TrySpawnItem(item.itemDef, qty)) // if there any spawn points
+				{
+					Singleton<EconomyManager>.Ins.AddMoney(-cost);
+					item.AddPurchasedQuantity(qty);
+					CART_ITEM_BUTTON.Remove(cartItemButton);
+					GameObject.Destroy(cartItemButton.gameObject);
+					GameEvents.RaiseItemPurchased();
+				}
+			});
+			this.RefreshCurrency();
+		}
+		public void AddToCart(ShopItem item, int quantity = 1)
+		{
+			var existingCartItem = this.FindCartItem(item);
+			if(existingCartItem != null)
+			{
+				existingCartItem.ChangeQuantity(existingCartItem.GetQuantity() + quantity);
+				return;
+			}
+
+			var cartItemButton = GameObject.Instantiate(this._pfCartItem, this._cartListHolder)
+											.gc<ShopCartItemButton>();
+			cartItemButton.Init(this, quantity, item);
+			this.CART_ITEM_BUTTON.Add(cartItemButton);
+		}
+		public void RemoveFromCart(ShopCartItemButton cartItemButton)
+		{
+			this.CART_ITEM_BUTTON.Remove(cartItemButton);
+			GameObject.Destroy(cartItemButton.gameObject);
+		}
 		#endregion
 
 		#region Unity Life Cycle
