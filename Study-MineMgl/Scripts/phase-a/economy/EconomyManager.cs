@@ -25,9 +25,9 @@ namespace SPACE_MineMGL
 			GameEvents.RaiseMoneyChanged(this._money);
 		}
 
-		public float getMoney
+		public float GetMoney()
 		{
-			get { return this._money; }
+			return this._money;
 		}
 		public void AddMoney(float amount)
 		{

@@ -21,10 +21,12 @@ namespace SPACE_MineMGL
 		public List<SO_ShopItemDefination> SHOP_ITEM_DEF = new List<SO_ShopItemDefination>();
 		public bool shouldHideIfAllLocked = false;
 
-		#region public API
-		[HideInInspector]
-		[NonSerialized]
+		#region public API, nonSerialized
 		public List<ShopItem> SHOP_ITEM = new List<ShopItem>();
+		public void Set_SHOP_ITEM(List<ShopItem> SHOP_ITEM)
+		{
+			this.SHOP_ITEM = SHOP_ITEM;
+		}
 
 		/// <summary>
 		/// returns true if any item is newly unlocked && not-purchased

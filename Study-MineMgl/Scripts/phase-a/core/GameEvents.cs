@@ -35,5 +35,35 @@ namespace SPACE_MineMGL
 				.Invoke(isAnyMenuOpen);
 		}
 		// << when menu is opened are closed, param true if menu opened
+
+		// when a certain shopItem gets unlocked >>
+		public static event Action<ShopItem> OnShopItemUnlocked;
+		public static void RaiseShopItemUnlocked(ShopItem shopItem)
+		{
+			Debug.Log(C.method(null, "magenta"));
+			GameEvents.OnShopItemUnlocked? // if there any subscribers
+				.Invoke(shopItem);
+		}
+		// << when a certain shopItem gets unlocked
+
+		// when shop UI is toggled >>
+		public static event Action OnToggleShopUI;
+		public static void RaiseToggleShopUI()
+		{
+			Debug.Log(C.method(null, "magenta"));
+			GameEvents.OnToggleShopUI? // if there any subscribers
+				.Invoke();
+		}
+		// << when shop UI is toggled
+
+		// when item purchased >>
+		public static event Action OnItemPurchased;
+		public static void RaiseItemPurchased()
+		{
+			Debug.Log(C.method(null, "magenta"));
+			GameEvents.OnItemPurchased? // if there any subscribers
+						.Invoke();
+		}
+		// << when item purchased
 	}
 }

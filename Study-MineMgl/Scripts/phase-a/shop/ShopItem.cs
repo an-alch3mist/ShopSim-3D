@@ -31,7 +31,9 @@ namespace SPACE_MineMGL
 		#region public API
 		public string GetName() { return this.itemDef.itemDefName; }
 		public string GetDescr() { return this.itemDef.descr; }
+		public float GetPrice() { return this.itemDef.price; }
 		public int GetTimesPurchased() { return this.timesPurchased; }
+		public int GetMaxStackSize() { return this.itemDef.maxStackSize; }
 		public void AddPurchasedQuantity(int quantity)
 		{
 			this.timesPurchased += quantity;
