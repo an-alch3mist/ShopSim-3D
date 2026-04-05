@@ -20,7 +20,7 @@ namespace SPACE_MineMGL
 		[SerializeField] ShopUI shopUI;
 		[SerializeField] InteractionWheelUI interactionWheelUI;
 
-		[SerializeField] GameObject _hudObj;
+		// [SerializeField] GameObject _hudObj;
 		[SerializeField] GameObject _backgroundBlur;
 
 		public bool IsInAnyMenu()
@@ -39,10 +39,12 @@ namespace SPACE_MineMGL
 		{
 			this._backgroundBlur.toggle(enabled);
 		}
+		/*
 		public void SetHudElems(bool enabled)
 		{
 			this._hudObj.toggle(enabled);
 		}
+		*/
 
 		#region Unity Life Cycle
 		private void LateUpdate()

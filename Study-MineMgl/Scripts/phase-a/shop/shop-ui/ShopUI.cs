@@ -17,13 +17,10 @@ namespace SPACE_MineMGL
 	/// </summary>
 	public class ShopUI : MonoBehaviour
 	{
-		[Header("Holders")]
 		[SerializeField] Transform _categoryListHolder, _shopItemListHolder, _cartListHolder;
 
-		[Header("Prefabs")]
 		[SerializeField] GameObject _pfcategory, _pfShopItem, _pfCartItem;
 
-		[Header("Individual UI")]
 		[SerializeField] TextMeshProUGUI _balanceMoneyText, _cartTotalText;
 		[SerializeField] Button _purchaseButton;
 		[SerializeField] Color _canAfford = Color.limeGreen, _cannotAfford = Color.grey;

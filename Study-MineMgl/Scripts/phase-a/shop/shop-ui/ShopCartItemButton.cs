@@ -66,10 +66,11 @@ namespace SPACE_MineMGL
 		{
 			this.ChangeQuantity(quantity + deltaQuantity);
 		}
-		public void RemoveQuantity()
+		public void RemoveFromCart()
 		{
 			this.ChangeQuantity(newQuantity: 0);
 		}
+		
 
 		public void UpdateUI()
 		{

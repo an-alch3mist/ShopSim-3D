@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd74d8e2d20aee84d81cfb22f703d519, type: 3}
+  m_Name: new SO_shopItemDef-dynamite
+  m_EditorClassIdentifier: Assembly-CSharp::SPACE_MineMGL.SO_ShopItemDefination
+  itemDefName: dynamite
+  descr: dynamite goes kaboom!
+  isLockedByDefaultStart: 1
+  price: 100
+  icon: {fileID: 21300000, guid: 25350a813438d3f44bf7a6a8dcf872e4, type: 3}
+  pfToSpawn: {fileID: 6475646658163836643, guid: 007c806809329f442ab3b06938fab302, type: 3}
+  maxStackSize: 10

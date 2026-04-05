@@ -17,7 +17,7 @@ namespace SPACE_MineMGL
 	{
 		[SerializeField] GameObject _pfInteractionButton;
 		[SerializeField] Transform _holderTransform;
-		[SerializeField] TextMeshPro _objectNameTxt;
+		[SerializeField] TextMeshProUGUI _objectNameTxt;
 		[SerializeField] KeyCode _closeInteractionKey = KeyCode.Escape;
 
 		#region Unity Life Cycle
