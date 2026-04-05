@@ -16,7 +16,7 @@ namespace SPACE_MineMGL
 	/// runtime wrapper around SO_ShopItemDef
 	/// </summary>
 	[System.Serializable]
-	public class ShopItem : MonoBehaviour
+	public class ShopItem
 	{
 		[SerializeField] public SO_ShopItemDefination itemDef;
 		[SerializeField] public bool isLockedCurr;
