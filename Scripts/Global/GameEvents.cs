@@ -187,7 +187,8 @@ public static class GameEvents
 	public static event Action<SO_PurchasableItem, int> OnCartUpdated;
 	public static void RaiseCartUpdated(SO_PurchasableItem item, int newQty)
 	{
-		GameEvents.OnCartUpdated?.Invoke(item, newQty);
+		GameEvents.OnCartUpdated?
+			.Invoke(item, newQty);
 	}
 
 	// ┌──────────────────────────────────────────────────────────────┐
@@ -202,7 +203,8 @@ public static class GameEvents
 	public static event Action<List<ShopCartEntry>> OnPurchaseConfirmed;
 	public static void RaisePurchaseConfirmed(List<ShopCartEntry> entries)
 	{
-		GameEvents.OnPurchaseConfirmed?.Invoke(entries);
+		GameEvents.OnPurchaseConfirmed?
+			.Invoke(entries);
 	}
 
 	// ┌──────────────────────────────────────────────────────────────┐
@@ -213,9 +215,9 @@ public static class GameEvents
 	public static event Action<SO_PurchasableItem, int> OnItemDelivered;
 	public static void RaiseItemDelivered(SO_PurchasableItem item, int boxCount)
 	{
-		GameEvents.OnItemDelivered?.Invoke(item, boxCount);
+		GameEvents.OnItemDelivered?
+			.Invoke(item, boxCount);
 	}
-
 	#endregion
 
 }
