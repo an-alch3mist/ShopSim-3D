@@ -99,10 +99,10 @@ MonoBehaviour:
   _itemDescrText: {fileID: 6497135672221157345}
   _itemPriceText: {fileID: 5515763682620824360}
   _itemIcon: {fileID: 2560473180608650138}
-  _canBuyButtonColor: {r: 0.1960784, g: 0.8039216, b: 0.1960784, a: 1}
-  _canBuyTextColor: {r: 0.1960784, g: 0.8039216, b: 0.1960784, a: 1}
+  _canBuyButtonColor: {r: 0.27625492, g: 0.6037736, b: 0.27625492, a: 1}
+  _canBuyTextColor: {r: 0.09812211, g: 0.4245283, b: 0.09812211, a: 1}
   _cannotBuyButtonColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  _cannotBuyTextColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  _cannotBuyTextColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1338726788556408604
 GameObject:
   m_ObjectHideFlags: 0

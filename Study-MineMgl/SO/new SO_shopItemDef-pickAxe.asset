@@ -20,4 +20,4 @@ MonoBehaviour:
   price: 50
   icon: {fileID: 21300000, guid: 25350a813438d3f44bf7a6a8dcf872e4, type: 3}
   pfToSpawn: {fileID: 9084731850705644818, guid: 7b2541bb62ac29145bbea74759242acb, type: 3}
-  maxStackSize: 10
+  maxStackSize: 20

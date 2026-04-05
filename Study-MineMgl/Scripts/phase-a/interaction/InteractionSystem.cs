@@ -33,35 +33,29 @@ namespace SPACE_MineMGL
 		{
 			if (Singleton<UIManager>.Ins != null && Singleton<UIManager>.Ins.IsInAnyMenu())
 				return;
-
 			var obj = this.GetLookedAtObject();
-			if (obj == null)
-				return;
-
-			if (this._interactionWheelUI != null)
-				this._interactionWheelUI.ClearInteractionWheel();
+			if (obj == null) return;
+			if (this._interactionWheelUI != null) this._interactionWheelUI.ClearInteractionWheel();
 			var INTERACTABLE = obj.GetComponentsInParent<IInteractable>();
-
-			if (INTERACTABLE == null)
-				return;
-			if (INTERACTABLE.Length == 0)
-				return;
-
-			if((INTERACTABLE.Length ==1) && !INTERACTABLE[0].ShouldUseInteractionWheel())
+			if (INTERACTABLE == null) return;
+			if (INTERACTABLE.Length == 0) return;
+			if ((INTERACTABLE.Length == 1) && (INTERACTABLE[0].ShouldUseInteractionWheel() == false))
 			{
 				List<SO_Interaction> INTERACTION = INTERACTABLE[0].GetInteractions();
-				if (INTERACTION.Count > 0)
-					INTERACTABLE[0].Interact(INTERACTION[0]);
+				LOG.AddLog(INTERACTION.map(interaction => new
+				{
+					interaction.name,
+					interaction.descr,
+					icon = interaction.icon.name,
+				}).ToNSJson(), "json");
+
+				if (INTERACTION.Count > 0) INTERACTABLE[0].Interact(INTERACTION[0]);
 			}
 			else
 			{
-				if (this._interactionWheelUI == null)
-					return;
+				if (this._interactionWheelUI == null) return;
 				this._interactionWheelUI.gameObject.SetActive(true);
-				INTERACTABLE.forEach(interactable =>
-				{
-					this._interactionWheelUI.PopulateInteractionWheel(interactable);
-				});
+				INTERACTABLE.forEach(interactable => { this._interactionWheelUI.PopulateInteractionWheel(interactable); });
 			}
 		}
 		public GameObject GetLookedAtObject()

@@ -23,6 +23,12 @@ namespace SPACE_MineMGL
 		// [SerializeField] GameObject _hudObj;
 		[SerializeField] GameObject _backgroundBlur;
 
+		protected override void Awake()
+		{
+			Debug.Log(C.method(this));
+			base.Awake();
+		}
+
 		public bool IsInAnyMenu()
 		{
 			if (this.shopUI.gameObject.activeSelf == true)

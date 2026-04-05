@@ -23,15 +23,21 @@ namespace SPACE_MineMGL
 		List<ShopItem> ALL_ITEM = new List<ShopItem>();
 
 		#region Unity Life Cycle
+		protected override void Awake()
+		{
+			Debug.Log(C.method(this));
+			base.Awake();
+		}
+
 		private void Start()
 		{
 			Debug.Log(C.method(this));
-			this.Init_ALL_ITEM();
+			this.Init_AllCATEGORY_ITEM();
 		}
 		#endregion
 
 		#region private API
-		void Init_ALL_ITEM()
+		void Init_AllCATEGORY_ITEM()
 		{
 			this.ALL_ITEM = new List<ShopItem>();
 			this._ALL_SHOP_CATEGORY.forEach(category =>
@@ -51,6 +57,8 @@ namespace SPACE_MineMGL
 				});
 				category.Set_SHOP_ITEM(ITEM);
 			});
+			//
+			LOG.AddLog(PhaseALOG.SHOP_CATEGORY_LIST__TO__JSON(this._ALL_SHOP_CATEGORY), "json");
 		}
 		#endregion
 

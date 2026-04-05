@@ -72,6 +72,7 @@ namespace SPACE_MineMGL
 		}
 		void ToggleShop()
 		{
+			Debug.Log("shop ui toggled".colorTag("lime"));
 			this.gameObject.toggle(flip: true);
 		}
 

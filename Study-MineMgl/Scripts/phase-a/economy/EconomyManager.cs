@@ -17,7 +17,7 @@ namespace SPACE_MineMGL
 	{
 		[SerializeField] private float _money = 400f;
 
-		// public event Action<float> OnMoneyChanged;
+
 		protected override void Awake()
 		{
 			Debug.Log(C.method(this));
