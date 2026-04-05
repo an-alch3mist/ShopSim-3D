@@ -47,7 +47,7 @@ namespace SPACE_MineMGL
 		#region Unity Life Cycle
 		private void LateUpdate()
 		{
-			this.SetBgBlur(this.IsInAnyMenu();)
+			this.SetBgBlur(this.IsInAnyMenu());
 		}
 		#endregion
 	}
