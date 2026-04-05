@@ -12,7 +12,7 @@ using SPACE_UTIL;
 
 namespace SPACE_MineMGL
 {
-	public class ShopManager : MonoBehaviour
+	public class ShopManager : Singleton<ShopManager>
 	{
 		
 	}

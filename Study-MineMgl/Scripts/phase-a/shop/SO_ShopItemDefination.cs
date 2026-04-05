@@ -23,7 +23,7 @@ namespace SPACE_MineMGL
 		[TextArea(minLines: 2, maxLines: 3)]
 		public string descr = @"";
 
-		public bool isLockedByDefault = false;
+		public bool isLockedByDefaultStart = false;
 		public int price = 25;
 		public Sprite icon;
 		public GameObject pfToSpawn;

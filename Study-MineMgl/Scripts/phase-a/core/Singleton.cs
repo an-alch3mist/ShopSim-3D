@@ -23,7 +23,7 @@ namespace SPACE_MineMGL
 				Ins = this as T;
 			else
 			{
-				Debug.Log($"{typeof(T)} singleton already exist, distroying duplicate objName: {this.gameObject.name}".colorTag("orange"));
+				Debug.Log($"{typeof(T)} singleton already exist, destroying duplicate, objName: {this.gameObject.name}".colorTag("orange"));
 				GameObject.Destroy(this.gameObject);
 			}
 		}

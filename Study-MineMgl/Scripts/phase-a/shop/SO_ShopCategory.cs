@@ -33,7 +33,7 @@ namespace SPACE_MineMGL
 		public bool ContainsNewItems()
 		{
 			foreach (var shopItem in this.SHOP_ITEM)
-				if (shopItem.isNewlyUnlocked)
+				if (shopItem.IsNewlyUnlocked())
 					return true;
 			return false;
 		}

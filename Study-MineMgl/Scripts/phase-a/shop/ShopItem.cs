@@ -24,7 +24,7 @@ namespace SPACE_MineMGL
 		public ShopItem(SO_ShopItemDefination itemDef)
 		{
 			this.itemDef = itemDef;
-			this.isLockedCurr = itemDef.isLockedByDefault;
+			this.isLockedCurr = itemDef.isLockedByDefaultStart;
 			this.timesPurchased = 0;
 		}
 
@@ -42,7 +42,7 @@ namespace SPACE_MineMGL
 		/// <returns></returns>
 		public bool IsNewlyUnlocked()
 		{
-			return (this.itemDef.isLockedByDefault == true) && // locked initially
+			return (this.itemDef.isLockedByDefaultStart == true) && // locked initially
 				   (this.isLockedCurr == false) && (this.timesPurchased == 0); // now its no longer locked at haven't purchased yet
 		}
 		#endregion

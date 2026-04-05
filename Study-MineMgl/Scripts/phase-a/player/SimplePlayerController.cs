@@ -12,16 +12,17 @@ using SPACE_UTIL;
 
 namespace SPACE_MineMGL
 {
-	public class SimplePlayerController : MonoBehaviour
+	public class SimplePlayerController : Singleton<SimplePlayerController>
 	{
 		[SerializeField] float _walkSpeed = 4f, _gravity = -10f;
 		[SerializeField] float _mouseSensitivity = 2f;
 
 		[SerializeField] Camera _playerCam;
 		CharacterController cc;
-		private void Awake()
+		protected override void Awake()
 		{
 			Debug.Log(C.method(this));
+			base.Awake();
 			cc = this.gc<CharacterController>();
 			Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false;
 
